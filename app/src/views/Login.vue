@@ -51,8 +51,8 @@ const rules = reactive<FormRules<RuleForm>>({
 const formRef = ref<FormInstance>();
 
 const handleLogin = () => {
-    formRef.value?.validate((valid:boolean) => {
-        console.log(valid)
+    formRef.value?.validate(() => {
+        
     })
 }
 
