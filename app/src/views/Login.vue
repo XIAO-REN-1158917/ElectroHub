@@ -26,7 +26,8 @@
 <script setup lang="ts">
 import logo from "@/assets/logo.png"
 import { reactive,ref } from "vue";
-import type { FormRules,FormInstance  } from 'element-plus'
+import type { FormRules, FormInstance } from 'element-plus'
+import { useUserStore } from "@/store/auth";
 
 interface RuleForm{
     username: string;
@@ -49,10 +50,11 @@ const rules = reactive<FormRules<RuleForm>>({
 })
 
 const formRef = ref<FormInstance>();
+const useStore = useUserStore()
 
 const handleLogin = () => {
     formRef.value?.validate(() => {
-        
+        useStore.login(ruleForm)
     })
 }
 

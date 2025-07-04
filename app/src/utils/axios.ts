@@ -23,12 +23,14 @@ service.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 
 // response interceptor
 service.interceptors.response.use((response: AxiosResponse) => {
-    if (response.data.code != 200) {
+    const { code, message } = response.data;
+    if (code != 200) {
         ElNotification({
             title: "Error",
-            message: response.data.message,
+            message,
             type: 'error',
         });
+        return Promise.reject(new Error(message));
     } else {
         return response.data
     }
