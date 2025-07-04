@@ -1,27 +1,63 @@
 <template>
     <div class="bg">
         <div class="login">
+            <!-- title -->
             <div class="logo">
                 <img :src="logo" alt="" width="70px" height="70px">
                 <h1 class="ml">Electro Hub</h1>
             </div>
-            <el-form>
-                <el-form-item>
-                    <el-input placeholder="Your username" prefix-icon="User"></el-input>
+            <!-- login form -->
+            <el-form :model="ruleForm" :rules="rules" ref="formRef">
+                <el-form-item prop="username">
+                    <el-input v-model="ruleForm.username" placeholder="Your username" prefix-icon="User"></el-input>
+                </el-form-item>
+                <el-form-item prop="password">
+                    <el-input v-model="ruleForm.password" placeholder="Your password" prefix-icon="lock" type="password"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-input placeholder="Your password" prefix-icon="lock"></el-input>
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" style="width: 100%;">Login</el-button>
+                    <el-button type="primary" style="width: 100%;" @click="handleLogin">Login</el-button>
                 </el-form-item>
             </el-form>
+
         </div>
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import logo from "@/assets/logo.png"
+import { reactive,ref } from "vue";
+import type { FormRules, FormInstance } from 'element-plus'
+import { useUserStore } from "@/store/auth";
+
+interface RuleForm{
+    username: string;
+    password: string
+}
+
+const ruleForm: RuleForm = reactive({
+    username: "",
+    password: ""
+})
+
+const rules = reactive<FormRules<RuleForm>>({
+    username: [
+        { required: true, message: "Username is required", trigger: "blur" },
+        { min: 4, max: 8, message: "Username should be 4 to 8 characters and include only letters and numbers.", trigger: "blur" }
+    ],
+    password: [
+        { required: true, message: "Password is required", trigger: "blur" }
+    ]
+})
+
+const formRef = ref<FormInstance>();
+const useStore = useUserStore()
+
+const handleLogin = () => {
+    formRef.value?.validate(() => {
+        useStore.login(ruleForm)
+    })
+}
+
 </script>
 
 <style lang="less" scoped>
