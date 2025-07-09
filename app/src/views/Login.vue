@@ -24,10 +24,11 @@
 </template>
 
 <script setup lang="ts">
-import logo from "@/assets/logo.png"
+import logo from "@/assets/logo.png";
 import { reactive,ref } from "vue";
-import type { FormRules, FormInstance } from 'element-plus'
+import type { FormRules, FormInstance } from 'element-plus';
 import { useUserStore } from "@/store/auth";
+import { useRouter } from "vue-router";
 
 interface RuleForm{
     username: string;
@@ -51,10 +52,15 @@ const rules = reactive<FormRules<RuleForm>>({
 
 const formRef = ref<FormInstance>();
 const useStore = useUserStore()
+const router = useRouter()
 
 const handleLogin = () => {
-    formRef.value?.validate(() => {
-        useStore.login(ruleForm)
+    formRef.value?.validate(async(valid: boolean) => {
+        if (valid) {
+            await useStore.login(ruleForm)
+            router.push("/")
+        }
+        
     })
 }
 
