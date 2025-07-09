@@ -9,7 +9,6 @@ const service: AxiosInstance = axios.create({
 
 // request interceptor
 service.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-
     return config
 }, (error: AxiosError) => {
     ElNotification({

@@ -26,7 +26,6 @@ export const useUserStore = defineStore("user", {
                 sessionStorage.setItem("username", username)
                 sessionStorage.setItem("menu", JSON.stringify(menulist))
             } catch (error) {
-                console.log(error)
             }
         },
         logout() {
