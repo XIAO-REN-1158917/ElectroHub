@@ -5,13 +5,16 @@
       </el-aside>
       <el-container>
         <el-header>Header</el-header>
-        <el-main>Main</el-main>
+        <el-main>
+            <RouterView></RouterView>
+        </el-main>
       </el-container>
     </el-container>
 </template>
 
 <script setup>
 import Menu from '@/components/navMenu/Menu.vue';
+import { RouterView } from 'vue-router';
 
 </script>
 
