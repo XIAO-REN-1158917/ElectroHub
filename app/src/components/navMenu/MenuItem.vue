@@ -9,7 +9,11 @@
         <my-menu v-for="child in item.children" :key="child.url" :item="child"></my-menu>
     </el-sub-menu>
 
-    <el-menu-item v-else :index="item.url" v-show="item.name!=='Detail'">
+    <el-menu-item 
+    v-else 
+    :index="item.url" 
+    v-show="item.name!=='Detail'"
+    @click="add(item.name,item.url,item.icon)">
         <!-- <span>{{ item.name }}</span> -->
         <el-icon>
             <component :is="item.icon"></component>
@@ -23,6 +27,7 @@
 import { defineComponent } from 'vue';
 import type {PropType} from 'vue';
 import type { MenuItem as MenuItemType } from "@/types/user";
+import { useTabsStore } from '@/store/tabs';
 
 export default defineComponent({
     name: "MyMenu",
@@ -30,6 +35,17 @@ export default defineComponent({
         item: {
             type: Object as PropType<MenuItemType>,
             required: true
+        }
+    },
+    setup() {
+        const tabsStore = useTabsStore();
+        const { addTab, setCurrentTab } = tabsStore;
+        const add=(name: string, url: string, icon: string) => {
+            addTab(name, url, icon)
+            setCurrentTab(name,url)
+        }
+        return {
+            add
         }
     }
 })

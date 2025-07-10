@@ -8,16 +8,20 @@
             <TopHeader></TopHeader>
         </el-header>
         <el-main>
-            <RouterView></RouterView>
+            <TabsLayout/>
+            
         </el-main>
       </el-container>
     </el-container>
 </template>
 
-<script setup>
+<script setup lang="ts">
+
 import Menu from '@/components/navMenu/Menu.vue';
-import TopHeader from "@/components/topHeader/topHeader.vue";
-import { RouterView } from 'vue-router';
+import TopHeader from "@/components/topHeader/TopHeader.vue";
+import TabsLayout from "@/layouts/TabsLayout.vue"
+
+
 
 </script>
 

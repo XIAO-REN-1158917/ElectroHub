@@ -1,11 +1,12 @@
 import router from "./index";
 import { useUserStore } from "@/store/auth";
+import { storeToRefs } from "pinia";
 
 router.beforeEach((to) => {
     const userStore = useUserStore();
-    const isLogin = userStore.token;
+    const { token, roles } = storeToRefs(userStore);
 
-    if (!isLogin) {
+    if (!token.value) {
         if (to.path !== "/login") {
             return { path: "/login" }
         }
@@ -16,8 +17,13 @@ router.beforeEach((to) => {
         //First, check if the route has a meta property. 
         // If it does, and the required permissions do not include the user's existing permissions, 
         // deny access and redirect to the homepage.
-        if (to.meta?.needAuth && !userStore.roles.some((role: string) => (to.meta.needAuth as string[]).includes(role))) {
-            return { path: "/" }
+        if (
+            to.meta?.needAuth &&
+            !roles.value.some((role: string) =>
+                (to.meta.needAuth as string[]).includes(role)
+            )
+        ) {
+            return { path: "/" };
         }
     }
 })

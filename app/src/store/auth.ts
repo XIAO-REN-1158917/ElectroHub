@@ -1,5 +1,9 @@
 import { defineStore } from "pinia";
 import { loginApi } from "@/api/user";
+import { useTabsStore } from "@/store/tabs";
+
+
+
 interface LoginParams {
     username: string;
     password: string
@@ -34,6 +38,9 @@ export const useUserStore = defineStore("user", {
             this.username = ""
             this.menu = [];
             sessionStorage.clear()
+            const tabsStore = useTabsStore();
+            tabsStore.tabs = [];
+            tabsStore.currentTab = { name: "", url: "" };
         }
     }
 })
