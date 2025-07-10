@@ -1,0 +1,3 @@
+<template>
+    Personal view
+</template>

@@ -1,0 +1,3 @@
+<template>
+    Alarm view
+</template>

@@ -1,0 +1,3 @@
+<template>
+    Monitor view
+</template>
