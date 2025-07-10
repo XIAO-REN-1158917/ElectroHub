@@ -33,28 +33,20 @@ export const useTabsStore = defineStore("tabs", () => {
 
         const newIndex = currentIndex === 0 ? 0 : currentIndex - 1;
         currentTab.value = tabs.value[newIndex];
-    }
+    };
 
-    // const removeTab = (name: string) => {
+    const reset = () => {
+        tabs.value = [];
+        currentTab.value = { name: "", url: "" };
+    };
 
-    //     if (currentTab.value.name === name) {
-    //         const currentIndex = tabs.value.findIndex(tab => tab.name === name);
-    //         if (currentIndex != 0) {
-    //             currentTab.value = tabs.value[currentIndex - 1]
-    //         } else {
-    //             return
-    //         }
-
-    //     }
-
-    //     tabs.value = tabs.value.filter(tab => tab.name !== name)
-    // }
 
     return {
         tabs,
         addTab,
         currentTab,
         setCurrentTab,
-        removeTab
+        removeTab,
+        reset
     }
 })

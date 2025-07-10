@@ -32,15 +32,19 @@ export const useUserStore = defineStore("user", {
             } catch (error) {
             }
         },
-        logout() {
-            this.token = ""
+
+        reset() {
+            this.token = "";
             this.roles = [];
-            this.username = ""
+            this.username = "";
             this.menu = [];
+        },
+
+        logout() {
+            this.reset();
             sessionStorage.clear()
             const tabsStore = useTabsStore();
-            tabsStore.tabs = [];
-            tabsStore.currentTab = { name: "", url: "" };
+            tabsStore.reset();
         }
     }
 })
