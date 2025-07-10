@@ -1,0 +1,3 @@
+<template>
+    Document view
+</template>

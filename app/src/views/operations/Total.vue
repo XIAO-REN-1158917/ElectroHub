@@ -1,0 +1,3 @@
+<template>
+    Total view
+</template>

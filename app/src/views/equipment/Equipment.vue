@@ -1,0 +1,3 @@
+<template>
+    Equipment view
+</template>

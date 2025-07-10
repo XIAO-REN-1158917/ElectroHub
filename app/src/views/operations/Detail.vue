@@ -1,0 +1,3 @@
+<template>
+    Detail view
+</template>

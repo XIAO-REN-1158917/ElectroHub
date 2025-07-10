@@ -11,7 +11,7 @@ const menulist = [
         icon: "DataLine"
     },
     {
-        name: "Charging Manage",
+        name: "Charging Station",
         url: "/chargingstation",
         icon: "Lightning",
         children: [
@@ -26,7 +26,7 @@ const menulist = [
                 icon: "DataAnalysis"
             },
             {
-                name: "Fault",
+                name: "Fault Report",
                 url: "/chargingstation/fault",
                 icon: "Warning"
             }
@@ -95,7 +95,7 @@ const menulist2 = [
         icon: "DataLine"
     },
     {
-        name: "Charging Manage",
+        name: "Charging Station",
         url: "/chargingstation",
         icon: "Lightning",
         children: [
@@ -110,7 +110,7 @@ const menulist2 = [
                 icon: "DataAnalysis"
             },
             {
-                name: "Fault",
+                name: "Fault Report",
                 url: "/chargingstation/fault",
                 icon: "Warning"
             }
