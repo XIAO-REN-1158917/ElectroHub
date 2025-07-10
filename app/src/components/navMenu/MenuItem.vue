@@ -9,7 +9,8 @@
         <my-menu v-for="child in item.children" :key="child.url" :item="child"></my-menu>
     </el-sub-menu>
 
-    <el-menu-item v-else :index="item.url">
+    <el-menu-item v-else :index="item.url" v-show="item.name!=='Detail'">
+        <!-- <span>{{ item.name }}</span> -->
         <el-icon>
             <component :is="item.icon"></component>
         </el-icon>
