@@ -11,7 +11,7 @@ const menulist = [
         icon: "DataLine"
     },
     {
-        name: "Charging Management",
+        name: "Charging Manage",
         url: "/chargingstation",
         icon: "Lightning",
         children: [
@@ -95,7 +95,7 @@ const menulist2 = [
         icon: "DataLine"
     },
     {
-        name: "Charging Management",
+        name: "Charging Manage",
         url: "/chargingstation",
         icon: "Lightning",
         children: [
