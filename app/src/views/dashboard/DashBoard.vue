@@ -154,6 +154,25 @@
                     </el-row>
                 </div>
             </el-card>
+            <el-card class="mt">
+                <template #header>
+                    <div class="card-header">
+                        <h1>Energy Statistics</h1>
+                    </div>
+                </template>
+                <el-row>
+                    <el-col :span="6">
+                        <div ref="chartRef2" style="width: 100%; height: 400px;">
+
+                        </div>
+                    </el-col>
+                    <el-col :span="18">
+                        <div ref="chartRef" style="width: 100%; height: 400px;">
+
+                        </div>
+                    </el-col>
+                </el-row>
+            </el-card>
         </el-col>
 
         <!-- right -->
@@ -163,7 +182,7 @@
     </el-row>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import flash from "@/assets/flash.png"
 import flash2 from "@/assets/flash2.png"
 import flash3 from "@/assets/flash3.png"
@@ -173,6 +192,31 @@ import remain from "@/assets/remain.png"
 import total from "@/assets/total.png"
 import money from "@/assets/money.png"
 import daily from "@/assets/daily.png"
+import { useChart } from "@/hooks/useChart"
+import { ref } from "vue"
+
+const chartRef = ref(null)
+const chartOptions:any={
+  title: {
+    text: 'ECharts Getting Started Example'
+  },
+  tooltip: {},
+  xAxis: {
+    data: ['shirt', 'cardigan', 'chiffon', 'pants', 'heels', 'socks']
+  },
+  yAxis: {},
+  series: [
+    {
+      name: 'sales',
+      type: 'bar',
+      data: [5, 20, 36, 10, 10, 20]
+    }
+  ]
+}
+
+useChart(chartRef,chartOptions)
+
+
 </script>
 
 <style lang="less" scoped>
@@ -194,7 +238,7 @@ import daily from "@/assets/daily.png"
         h1{
             font-size: 36px;
         }
-        ::v-deep .el-statistic__content{
+        :deep(.el-statistic__content) {
             margin-top: 10px;
             margin-bottom: 10px;
         }
