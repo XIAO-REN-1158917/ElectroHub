@@ -3,7 +3,7 @@ import type { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse, AxiosErr
 import { ElNotification } from 'element-plus'
 
 const service: AxiosInstance = axios.create({
-    baseURL: "http://www.demo.com",
+    baseURL: "https://www.demo.com",
     timeout: 5000
 });
 

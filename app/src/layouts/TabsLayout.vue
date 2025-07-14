@@ -70,7 +70,7 @@ setCurrentTab(name,url)
 
 <style lang="less" scoped>
 .demo-tabs{
-    ::v-deep .is-active{
+    :deep(.is-active) {
         background-color: rgb(34, 136, 255) !important;
         color: #fff !important;
     }

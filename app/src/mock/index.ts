@@ -161,7 +161,7 @@ const menulist2 = [
 ]
 
 // Login interface
-Mock.mock("http://www.demo.com/login", "post", (options: any) => {
+Mock.mock("https://www.demo.com/login", "post", (options: any) => {
     const { username, password } = JSON.parse(options.body);
     if (username === "admin" && password === "admin123123") {
         return {
@@ -197,3 +197,44 @@ Mock.mock("http://www.demo.com/login", "post", (options: any) => {
     }
 
 })
+
+// ECharts chart API - Line chart
+Mock.mock("https://www.demo.com/lineChartData", "get", () => {
+  return {
+    code: 200,
+    message: "Operation successful",
+    data: {
+      list: [
+        { name: "Charging Volume", data: [20, 50, 30, 70, 60, 80, 40, 60, 50] },
+        { name: "Charging Duration", data: [40, 60, 50, 80, 70, 90, 60, 70, 80] },
+        { name: "Charging Power", data: [30, 40, 60, 50, 70, 20, 30, 40, 60] }
+      ]
+    }
+  };
+});
+
+// ECharts chart API - Pie chart
+Mock.mock("https://www.demo.com/pieChartData", 'get', () => {
+  return {
+    code: 200,
+    message: 'Operation successful',
+    data: {
+      list: [
+        { value: 35, name: 'Pile' },
+        { value: 30, name: 'Station' },
+        { value: 25, name: 'Pole' }
+      ]
+    }
+  };
+});
+
+// ECharts chart API - Radar chart
+Mock.mock("https://www.demo.com/radarChartData", 'get', () => {
+  return {
+    code: 200,
+    message: 'Operation successful',
+    data: {
+      list: [42, 30, 200, 350, 500, 180]
+    }
+  };
+});
