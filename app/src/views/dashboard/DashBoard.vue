@@ -185,6 +185,119 @@
                 </template>
                 <div ref="radarChartRef" style="width: 100%; height: 240px;"></div>
             </el-card>
+            <!-- This section uses a static page due to simple or repetitive data logic -->
+            <el-card class="mt">
+                <template #header>
+                    <div class="card-header">
+                        <h1>Revenue Statistics</h1>
+                    </div>
+                </template>
+                <ul class="ranking-list">
+                    <li class="ranking-item">
+                        <span class="rank" style="background-color: rgb(103, 194, 58);color: #fff;">1</span>
+                        <span class="store-name">Auckland</span>
+                        <span class="sales">52,457</span>
+                        <span style="margin-left:50px">
+                            24%
+                            <el-icon color="green">
+                                <CaretTop />
+                            </el-icon>
+                        </span>
+                    </li>
+                    <li class="ranking-item">
+                        <span class="rank" style="background-color:rgb(64, 158, 255);color: #fff;">2</span>
+                        <span class="store-name">Wellington</span>
+                        <span class="sales">323,234</span>
+                        <span style="margin-left: 50px;">
+                            24%
+                            <el-icon color="red">
+                                <CaretBottom />
+                            </el-icon>
+                        </span>
+                    </li>
+                    <li class="ranking-item">
+                        <span class="rank" style="background-color:rgb(230, 162, 60);color: #fff;">3</span>
+                        <span class="store-name">Christchurch</span>
+                        <span class="sales">192,255</span>
+                        <span style="margin-left: 50px;">
+                            24%
+                            <el-icon color="red">
+                                <CaretBottom />
+                            </el-icon>
+                        </span>
+                    </li>
+                    <li class="ranking-item">
+                        <span class="rank">4</span>
+                        <span class="store-name">Hamilton</span>
+                        <span class="sales">17,540</span>
+                        <span style="margin-left: 50px;">
+                            24%
+                            <el-icon color="green">
+                                <CaretTop />
+                            </el-icon>
+                        </span>
+                    </li>
+                    <li class="ranking-item">
+                        <span class="rank">5</span>
+                        <span class="store-name">Tauranga</span>
+                        <span class="sales">662,337</span>
+                        <span style="margin-left: 50px;">
+                            24%
+                            <el-icon color="red">
+                                <CaretBottom />
+                            </el-icon>
+                        </span>
+                    </li>
+                    <li class="ranking-item">
+                        <span class="rank">6</span>
+                        <span class="store-name">Dunedin</span>
+                        <span class="sales">22,941</span>
+                        <span style="margin-left: 50px;">
+                            24%
+                            <el-icon color="green">
+                                <CaretTop />
+                            </el-icon>
+                        </span>
+                    </li>
+                    <li class="ranking-item">
+                        <span class="rank">7</span>
+                        <span class="store-name">Palmerston North</span>
+                        <span class="sales">565,221</span>
+                        <span style="margin-left: 50px;">
+                            24%
+                            <el-icon color="green">
+                                <CaretTop />
+                            </el-icon>
+                        </span>
+                    </li>
+                </ul>
+            </el-card>
+            <el-card class="mt">
+                <template #header>
+                    <div class="card-heder">
+                        <h1>Fault Alarm</h1>
+                    </div>
+                </template>
+                <el-timeline style="max-width: 600px">
+                    <el-timeline-item timestamp="12/4/2025" placement="top" :hollow="true" type="danger">
+                        <el-card>
+                            <h4>Circuit breaker overload detected in Zone A.</h4>
+                        </el-card>
+                    </el-timeline-item>
+                    <el-timeline-item timestamp="3/2/2025" placement="top" :hollow="true" type="warning">
+                        <el-card>
+                            <h4>Voltage drop alarm triggered on Main Line 2.</h4>
+                           
+                        </el-card>
+                    </el-timeline-item>
+                    <el-timeline-item timestamp="17/1/2025" placement="top" :hollow="true" type="danger">
+                        <el-card>
+                            <h4>Transformer fault: abnormal temperature rise.</h4>
+                        </el-card>
+                    </el-timeline-item>
+                </el-timeline>
+            </el-card>
+
         </el-col>
     </el-row>
 </template>
@@ -401,6 +514,36 @@ useChart(radarChartRef,setRadarChartData)
         color: #333;
     }
 }
+.ranking-list {
+    .ranking-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
 
+        .rank {
+            display: inline-block;
+            font-weight: bold;
+            color: #666;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+        }
+
+        .store-name {
+            flex-grow: 1;
+            padding: 0 10px;
+        }
+
+        .sales {
+            color: #666;
+        }
+    }
+
+    .ranking-item:nth-child(even) {
+        background-color: rgb(253, 246, 236);
+    }
+}
 
 </style>
