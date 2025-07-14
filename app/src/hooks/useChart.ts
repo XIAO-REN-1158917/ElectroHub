@@ -3,15 +3,16 @@ import { onBeforeUnmount, onMounted, ref,markRaw } from "vue";
 import * as echarts from 'echarts'
 
 
-export function useChart(chartRef:Ref<HTMLElement|null>,initialOptions:any) {
+export function useChart(chartRef:Ref<HTMLElement|null>,getChartOptions: () => Promise<any>) {
     const chartInstance = ref<echarts.ECharts | null>(null)
-    const chartOptions = ref(initialOptions)
+    
 
-    const initChart = () => {
+    const initChart = async () => {
         if (chartRef.value) {
+            const options = await getChartOptions();
             // Turn off Vue reactivity to avoid conflicts with ECharts reactivity.
             chartInstance.value = markRaw(echarts.init(chartRef.value));
-            chartInstance.value.setOption(chartOptions.value);
+            chartInstance.value.setOption(options);
         }
     }
 

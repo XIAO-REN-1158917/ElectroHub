@@ -167,7 +167,7 @@
                         </div>
                     </el-col>
                     <el-col :span="18">
-                        <div ref="chartRef" style="width: 100%; height: 400px;">
+                        <div ref="lineChartRef" style="width: 100%; height: 400px;">
 
                         </div>
                     </el-col>
@@ -193,28 +193,88 @@ import total from "@/assets/total.png"
 import money from "@/assets/money.png"
 import daily from "@/assets/daily.png"
 import { useChart } from "@/hooks/useChart"
-import { ref } from "vue"
+import { ref,reactive } from "vue"
+import { lineChartDataApi } from "@/api/dashboard"
 
-const chartRef = ref(null)
-const chartOptions:any={
-  title: {
-    text: 'ECharts Getting Started Example'
-  },
-  tooltip: {},
-  xAxis: {
-    data: ['shirt', 'cardigan', 'chiffon', 'pants', 'heels', 'socks']
-  },
-  yAxis: {},
-  series: [
-    {
-      name: 'sales',
-      type: 'bar',
-      data: [5, 20, 36, 10, 10, 20]
+const lineChartRef = ref(null)
+const setLineChartData = async () => {
+    const chartOptions: any = reactive({
+        title: {
+            text: 'Power',
+        },
+        tooltip: {
+            trigger: 'axis',
+        },
+        legend: {
+            data: []
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: ['13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00']
+        },
+        yAxis: {
+            type: 'value',
+            axisLabel: {
+                formatter: '{value}kw'
+            }
+        },
+        series: [
+            {
+                name: '',
+                type: 'line',
+                data: [],
+                lineStyle: {
+                    width: 4
+                },
+                itemStyle: {
+                    color: "purple",
+                    shadowBlur: 5,
+                    shadowColor: 'rgba(0,255,0,0.5)'
+                },
+                smooth: true
+            },
+            {
+                name: '',
+                type: 'line',
+                data: [],
+                lineStyle: {
+                    width: 4
+                },
+                itemStyle: {
+                    color: "lightgreen",
+                    shadowBlur: 5,
+                    shadowColor: 'rgba(0,255,0,0.5)'
+                },
+                smooth: true
+            },
+            {
+                name: '',
+                type: 'line',
+                data: [],
+                lineStyle: {
+                    width: 4
+                },
+                itemStyle: {
+                    color: "skyblue",
+                    shadowBlur: 5,
+                    shadowColor: 'rgba(0,255,0,0.5)'
+                },
+                smooth: true
+            },
+
+        ]
+    });
+    const res = await lineChartDataApi()
+    chartOptions.legend.data = res.data.list.map((item: any) => item.name);
+    for (let i = 0; i < res.data.list.length; i++) {
+        chartOptions.series[i].name = res.data.list[i].name
+        chartOptions.series[i].data = res.data.list[i].data
     }
-  ]
+    return chartOptions
 }
 
-useChart(chartRef,chartOptions)
+useChart(lineChartRef,setLineChartData)
 
 
 </script>
