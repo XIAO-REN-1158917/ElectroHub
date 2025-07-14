@@ -214,15 +214,15 @@ Mock.mock("https://www.demo.com/lineChartData", "get", () => {
 });
 
 // ECharts chart API - Pie chart
-Mock.mock("https://www.demo.com/chartData2", 'get', () => {
+Mock.mock("https://www.demo.com/pieChartData", 'get', () => {
   return {
     code: 200,
     message: 'Operation successful',
     data: {
       list: [
-        { value: 35, name: 'Charging Pile' },
-        { value: 30, name: 'Charging Station' },
-        { value: 25, name: 'Charging Pole' }
+        { value: 35, name: 'Pile' },
+        { value: 30, name: 'Station' },
+        { value: 25, name: 'Pole' }
       ]
     }
   };

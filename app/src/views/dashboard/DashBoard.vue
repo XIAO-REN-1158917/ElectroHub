@@ -162,7 +162,7 @@
                 </template>
                 <el-row>
                     <el-col :span="6">
-                        <div ref="chartRef2" style="width: 100%; height: 400px;">
+                        <div ref="pieChartRef" style="width: 100%; height: 400px;">
 
                         </div>
                     </el-col>
@@ -194,13 +194,15 @@ import money from "@/assets/money.png"
 import daily from "@/assets/daily.png"
 import { useChart } from "@/hooks/useChart"
 import { ref,reactive } from "vue"
-import { lineChartDataApi } from "@/api/dashboard"
+import { lineChartDataApi,pieChartDataApi } from "@/api/dashboard"
 
 const lineChartRef = ref(null)
+const pieChartRef = ref(null)
+
 const setLineChartData = async () => {
     const chartOptions: any = reactive({
         title: {
-            text: 'Power',
+            text: 'Power Statistics',
         },
         tooltip: {
             trigger: 'axis',
@@ -274,7 +276,52 @@ const setLineChartData = async () => {
     return chartOptions
 }
 
-useChart(lineChartRef,setLineChartData)
+const setPieChartData = async () => {
+    const chartOptions: any = reactive({
+        legend: {
+            top: 'bottom'
+        },
+        tooltip: {
+            trigger: "item",
+            formatter: '{a}<br/>{b}:{c}'
+        },
+        series: [
+            {
+                name: 'Revenue',
+                type: 'pie',
+                radius: ["30%", "60%"],
+                center: ['50%', '50%'],
+                roseType: "area",
+                emphasis: {
+                    label: {
+                        show: true,
+                        fontSize: "12",
+                        fontWeight: "bold"
+                    }
+                },
+                data: []
+            }
+        ],
+        graphic: {
+            type: 'text',
+            left: "center",
+            top: "center",
+            style: {
+                text: "Revenue",
+                fontSize: 20,
+                fill: "#333"
+            }
+        }
+    })
+    const res = await pieChartDataApi()
+    chartOptions.series[0].data = res.data.list;
+    return chartOptions
+}
+
+
+
+useChart(lineChartRef, setLineChartData)
+useChart(pieChartRef,setPieChartData)
 
 
 </script>
