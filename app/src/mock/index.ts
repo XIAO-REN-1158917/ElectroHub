@@ -229,7 +229,7 @@ Mock.mock("https://www.demo.com/pieChartData", 'get', () => {
 });
 
 // ECharts chart API - Radar chart
-Mock.mock("https://www.demo.com/chartData3", 'get', () => {
+Mock.mock("https://www.demo.com/radarChartData", 'get', () => {
   return {
     code: 200,
     message: 'Operation successful',

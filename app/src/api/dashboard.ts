@@ -2,7 +2,9 @@ import { get } from "@/utils/http"
 
 const Api = {
     LineChartData: "/lineChartData",
-    PieChartData:"/pieChartData"
+    PieChartData: "/pieChartData",
+    RadarChartData:"/radarChartData"
+    
 } as const;
 
 function lineChartDataApi() {
@@ -13,4 +15,8 @@ function pieChartDataApi() {
     return get(Api.PieChartData)
 }
 
-export {lineChartDataApi,pieChartDataApi}
+function radarChartDataApi() {
+    return get(Api.RadarChartData)
+}
+
+export {lineChartDataApi,pieChartDataApi,radarChartDataApi}

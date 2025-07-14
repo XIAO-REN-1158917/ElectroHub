@@ -1,5 +1,5 @@
 <template>
-    <el-row>
+    <el-row :gutter="20">
         <!-- left -->
         <!-- This section uses a static page due to simple or repetitive data logic. -->
         <el-col :span="18">
@@ -177,7 +177,14 @@
 
         <!-- right -->
         <el-col :span="6">
-            
+            <el-card>
+                <template #header>
+                    <div class="card-header">
+                        <h1>Equipment Overview</h1>
+                    </div>
+                </template>
+                <div ref="radarChartRef" style="width: 100%; height: 240px;"></div>
+            </el-card>
         </el-col>
     </el-row>
 </template>
@@ -194,10 +201,11 @@ import money from "@/assets/money.png"
 import daily from "@/assets/daily.png"
 import { useChart } from "@/hooks/useChart"
 import { ref,reactive } from "vue"
-import { lineChartDataApi,pieChartDataApi } from "@/api/dashboard"
+import { lineChartDataApi,pieChartDataApi,radarChartDataApi } from "@/api/dashboard"
 
 const lineChartRef = ref(null)
 const pieChartRef = ref(null)
+const radarChartRef = ref(null)
 
 const setLineChartData = async () => {
     const chartOptions: any = reactive({
@@ -318,10 +326,42 @@ const setPieChartData = async () => {
     return chartOptions
 }
 
+const setRadarChartData = async () => {
+    const chartOptions = reactive({
+        radar: {
+            // shape: 'circle',
+            indicator: [
+                { name: 'Idle', max: 65 },
+                { name: 'In Use', max: 160 },
+                { name: 'Faulty', max: 300 },
+                { name: 'Under Maintenance', max: 380 },
+                { name: 'Replaced', max: 520 },
+                { name: 'Scrapped', max: 250 }
+            ]
+        },
+        series: [
+            {
+                name: 'Equipment Overview',
+                type: 'radar',
+                data: [
+                    {
+                        value: [],
+                        name: 'Equipment Overview'
+                    },
+                ]
+            }
+        ]
+    })
+    const res = await radarChartDataApi();
+    chartOptions.series[0].data[0].value = res.data.list;
+    return chartOptions;
+}
+
 
 
 useChart(lineChartRef, setLineChartData)
-useChart(pieChartRef,setPieChartData)
+useChart(pieChartRef, setPieChartData)
+useChart(radarChartRef,setRadarChartData)
 
 
 </script>

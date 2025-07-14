@@ -18,7 +18,7 @@ import logo from "@/assets/logo.png"
 
 const userStore = useUserStore();
 const menuItems = userStore.menu;
-console.log(userStore.menu);
+// console.log(userStore.menu);
 </script>
 
 <style lang="less" scoped>
