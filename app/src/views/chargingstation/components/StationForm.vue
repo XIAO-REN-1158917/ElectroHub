@@ -15,7 +15,10 @@
                         <el-input v-model="ruleForm.name"></el-input>
                     </el-form-item>
                     <el-form-item label="ID:" prop="id">
-                        <el-input v-model="ruleForm.id"></el-input>
+                        <el-input 
+                        v-model="ruleForm.id"
+                        :disabled="disabled"
+                        ></el-input>
                     </el-form-item>
                     <el-form-item label="City:" prop="city">
                         <el-input v-model="ruleForm.city"></el-input>
@@ -35,7 +38,11 @@
                         <el-input v-model="ruleForm.slow"></el-input>
                     </el-form-item>
                     <el-form-item label="Status:" prop="status" >
-                        <el-select placeholder="Status" v-model="ruleForm.status">
+                        <el-select 
+                        placeholder="Status" 
+                        v-model="ruleForm.status"
+                        :disabled="disabled"
+                        >
                             <el-option label="All" :value="1"></el-option>
                             <el-option label="In Use" :value="2"></el-option>
                             <el-option label="Available" :value="3"></el-option>
@@ -44,10 +51,16 @@
                         </el-select>
                     </el-form-item >
                     <el-form-item label="In Use:" prop="inUse">
-                        <el-input v-model="ruleForm.inUse"></el-input>
+                        <el-input 
+                        v-model="ruleForm.inUse"
+                        :disabled="disabled"
+                        ></el-input>
                     </el-form-item>
                     <el-form-item label="Fault:" prop="fault" >
-                        <el-input v-model="ruleForm.fault"></el-input>
+                        <el-input 
+                        v-model="ruleForm.fault"
+                        :disabled="disabled"
+                        ></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -66,11 +79,13 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from "vue"
+import { reactive, ref, watch } from "vue"
 import type { FormRules } from "element-plus"
 import type { RowType } from "@/types/station"
+import { useStationStore } from "@/store/station";
+import { storeToRefs } from "pinia";
 
-defineProps({
+const props=defineProps({
     dialogVisible: {
         type: Boolean,
         required: true
@@ -126,7 +141,16 @@ const rules = reactive<FormRules<RowType>>({
   ]
 });
 
-const emit=defineEmits(["close"])
+const emit = defineEmits(["close"])
+
+const stationStore = useStationStore()
+const { rowData } = storeToRefs(stationStore)
+watch(() => props.dialogVisible, () => {
+    ruleForm.value = rowData.value
+    disabled.value = true
+    
+})
+const disabled = ref<boolean>(false)
 
 const hanleCancel = () => {
     emit("close")

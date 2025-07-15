@@ -107,6 +107,8 @@ import { onMounted, reactive, ref } from "vue";
 import { stationListApi } from "@/api/chargingStation"; 
 import stationForm from "./components/StationForm.vue";
 import type { RowType } from "@/types/station";
+import { useStationStore } from "@/store/station";
+
 
 const select = ref("name")
 const formParams = reactive({
@@ -158,8 +160,10 @@ onMounted(() => {
 })
 
 const visible = ref<boolean>(false)
-
-const edit = (row:RowType) => {
+const stationStore = useStationStore()
+const {setRowData}=stationStore
+const edit = (row: RowType) => {
+    setRowData(row)
     visible.value=true
 }
 
