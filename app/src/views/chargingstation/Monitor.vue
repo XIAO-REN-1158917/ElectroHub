@@ -69,7 +69,7 @@
                     <el-tag v-if="scope.row.status==5" type="danger">Fault</el-tag>
                 </template>
             </el-table-column>
-            <el-table-column prop="now" label="Now"  />
+            <el-table-column prop="inUse" label="In Use"  />
             <el-table-column prop="fault" label="Fault"  />
             <el-table-column prop="person" label="Person"  />
             <el-table-column prop="tel" label="Tel"  />
@@ -92,12 +92,14 @@
         @current-change="handleCurrentChange"
         />
     </el-card>
+    <stationForm/>
 </template>
 
 <script lang="ts" setup>
 import { onMounted, reactive, ref } from "vue";
 import { stationListApi } from "@/api/chargingStation"; 
-import { formProps } from "element-plus";
+import stationForm from "./components/StationForm.vue";
+import type { RowType } from "@/types/station";
 
 const select = ref("name")
 const formParams = reactive({
@@ -111,7 +113,7 @@ const handleAdd = () => {
     console.log("handleAdd")
 }
 
-const stationListTableData = ref([])
+const stationListTableData = ref<RowType[]>([])
 const pageInfo = reactive({
     page: 1,
     pageSize: 10,
