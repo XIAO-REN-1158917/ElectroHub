@@ -239,6 +239,7 @@ Mock.mock("https://www.demo.com/radarChartData", 'get', () => {
   };
 });
 
+// Mock data - Station list
 let chargingStation = [
   {
     name: "RapidCharge Power Spot",
@@ -246,7 +247,7 @@ let chargingStation = [
     city: "New Plymouth",
     fast: 93,
     slow: 39,
-    status: 1,
+    status: 2,
     now: 7,
     fault: 3,
     person: "Mia Thomas",
@@ -378,7 +379,7 @@ let chargingStation = [
     city: "Christchurch",
     fast: 82,
     slow: 29,
-    status: 1,
+    status: 3,
     now: 16,
     fault: 3,
     person: "Emma Wilson",
@@ -426,7 +427,7 @@ let chargingStation = [
     city: "Invercargill",
     fast: 74,
     slow: 32,
-    status: 1,
+    status: 4,
     now: 6,
     fault: 2,
     person: "James Smith",
@@ -450,7 +451,7 @@ let chargingStation = [
     city: "Napier",
     fast: 78,
     slow: 33,
-    status: 1,
+    status: 5,
     now: 11,
     fault: 0,
     person: "Noah Davis",
@@ -486,7 +487,7 @@ let chargingStation = [
     city: "Hamilton",
     fast: 88,
     slow: 28,
-    status: 1,
+    status: 2,
     now: 11,
     fault: 0,
     person: "Noah Davis",
@@ -510,7 +511,7 @@ let chargingStation = [
     city: "Napier",
     fast: 79,
     slow: 39,
-    status: 1,
+    status: 3,
     now: 3,
     fault: 1,
     person: "Jacob Thompson",
@@ -534,7 +535,7 @@ let chargingStation = [
     city: "Auckland",
     fast: 86,
     slow: 33,
-    status: 1,
+    status: 4,
     now: 5,
     fault: 2,
     person: "Olivia Brown",
