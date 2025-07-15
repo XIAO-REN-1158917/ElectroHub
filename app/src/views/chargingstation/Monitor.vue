@@ -53,7 +53,8 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
+import { stationListApi } from "@/api/chargingStation"; 
 
 const select = ref("name")
 const formParams = reactive({
@@ -64,5 +65,14 @@ const formParams = reactive({
 const handleAdd = () => {
     
 }
+
+const loadStationListData = async () => {
+    const stationList = await stationListApi({ page: 1, pageSize: 10, status: 1 })
+    console.log("station list data test!",stationList)
+}
+
+onMounted(() => {
+    loadStationListData()
+})
 
 </script>
