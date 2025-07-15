@@ -73,9 +73,13 @@
             <el-table-column prop="fault" label="Fault"  />
             <el-table-column prop="person" label="Person"  />
             <el-table-column prop="tel" label="Tel"  />
-            <el-table-column label="Operate">
+            <el-table-column label="Operate" width="140">
                 <template #default="scope">
-                    <el-button type="primary" size="small">Edit</el-button>
+                    <el-button 
+                    type="primary" 
+                    size="small"
+                    @click="edit(scope.row)"
+                    >Edit</el-button>
                     <el-button type="danger" size="small">Delet</el-button>
                 </template>
             </el-table-column>
@@ -92,7 +96,10 @@
         @current-change="handleCurrentChange"
         />
     </el-card>
-    <stationForm/>
+    <stationForm 
+    :dialog-visible="visible"
+    @close="visible=false"
+    />
 </template>
 
 <script lang="ts" setup>
@@ -149,5 +156,13 @@ const handleReset = () => {
 onMounted(() => {
     loadStationListData()
 })
+
+const visible = ref<boolean>(false)
+
+const edit = (row:RowType) => {
+    visible.value=true
+}
+
+
 
 </script>

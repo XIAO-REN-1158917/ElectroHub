@@ -1,7 +1,8 @@
 <template>
     <el-dialog
-        v-model="dialogVisible"
+        :model-value="dialogVisible"
         title="Tips"
+        @close="hanleCancel()"
     >
         <el-form 
         label-width="120"
@@ -53,7 +54,7 @@
         </el-form>
         <template #footer>
             <div class="dialog-footer">
-                <el-button>
+                <el-button @click="hanleCancel()">
                     Cancel
                 </el-button>
                 <el-button type="primary">
@@ -67,7 +68,14 @@
 <script lang="ts" setup>
 import { reactive, ref } from "vue"
 import type { FormRules } from "element-plus"
-import type{RowType} from "@/types/station"
+import type { RowType } from "@/types/station"
+
+defineProps({
+    dialogVisible: {
+        type: Boolean,
+        required: true
+    }
+})
 
 const ruleForm=ref<RowType>({
     name:"",
@@ -82,7 +90,7 @@ const ruleForm=ref<RowType>({
     tel:""
 })
 
-const dialogVisible = ref<boolean>(true)
+
 
 // Simplified validation for demo purposes only.
 const rules = reactive<FormRules<RowType>>({
@@ -117,5 +125,11 @@ const rules = reactive<FormRules<RowType>>({
     { required: true, message: "Fault count is required", trigger: "blur" }
   ]
 });
+
+const emit=defineEmits(["close"])
+
+const hanleCancel = () => {
+    emit("close")
+}
 
 </script>
