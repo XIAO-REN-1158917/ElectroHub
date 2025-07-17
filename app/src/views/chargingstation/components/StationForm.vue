@@ -1,13 +1,15 @@
 <template>
     <el-dialog
         :model-value="dialogVisible"
-        title="Tips"
+        :title="title"
         @close="hanleCancel()"
+        destroy-on-close
     >
         <el-form 
         label-width="120"
         :rules="rules"
         :model="ruleForm"
+        ref="formRef"
         >
             <el-row>
                 <el-col :span="12">
@@ -67,10 +69,13 @@
         </el-form>
         <template #footer>
             <div class="dialog-footer">
-                <el-button @click="hanleCancel()">
+                <el-button @click="hanleCancel">
                     Cancel
                 </el-button>
-                <el-button type="primary">
+                <el-button 
+                type="primary"
+                @click="handleConfirm"
+                >
                     Confirm
                 </el-button>
             </div>
@@ -80,10 +85,12 @@
 
 <script lang="ts" setup>
 import { reactive, ref, watch } from "vue"
-import type { FormRules } from "element-plus"
+import type { FormRules,FormInstance } from "element-plus"
 import type { RowType } from "@/types/station"
 import { useStationStore } from "@/store/station";
 import { storeToRefs } from "pinia";
+import { editStationApi } from "@/api/chargingStation";
+import { ElMessage } from "element-plus";
 
 const props=defineProps({
     dialogVisible: {
@@ -141,19 +148,47 @@ const rules = reactive<FormRules<RowType>>({
   ]
 });
 
-const emit = defineEmits(["close"])
+const emit = defineEmits(["close","reload"])
 
 const stationStore = useStationStore()
 const { rowData } = storeToRefs(stationStore)
+const title=ref<string>("")
+
 watch(() => props.dialogVisible, () => {
+
+    if (rowData.value.name) {
+        title.value="Edit Station"
+        disabled.value = true
+    } else {
+        title.value = "Add New Station"
+        disabled.value = false
+    }
+
     ruleForm.value = rowData.value
-    disabled.value = true
-    
 })
 const disabled = ref<boolean>(false)
 
 const hanleCancel = () => {
     emit("close")
+}
+
+const formRef=ref<FormInstance>()
+
+const handleConfirm = () => {
+    formRef.value?.validate(async(valid: boolean) => {
+        if (valid) {
+            const res = await editStationApi(ruleForm.value)
+            if (res.code == 200) {
+                ElMessage({
+                    message: res.data,
+                    type: "success"
+                });
+                hanleCancel();
+                emit("reload")
+            }
+        }
+    })
+    
 }
 
 </script>

@@ -21,9 +21,26 @@ export const useStationStore = defineStore("station", () => {
         rowData.value = row
     };
 
+    const resetFormData = () => {
+        rowData.value = {
+            name: "",
+            id: "",
+            city: "",
+            fast: "",
+            slow: "",
+            status: 1,
+            inUse: "",
+            fault: "",
+            person: "",
+            tel: ""
+        }
+    }
+
+
     return {
         rowData,
-        setRowData
+        setRowData,
+        resetFormData
     }
 
 })

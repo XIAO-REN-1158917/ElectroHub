@@ -629,7 +629,7 @@ let chargingStation = [
 // Data backup
 const originalChargingStation = JSON.parse(JSON.stringify(chargingStation));
 // Station list API
-Mock.mock("https://www.demo.com/stationList", 'post', (options: any) => {
+Mock.mock("https://www.demo.com/station", 'post', (options: any) => {
   chargingStation = originalChargingStation
   const { id, name, status, page, pageSize } = options.body ? JSON.parse(options.body) : {}
   // Filter mock data based on query parameters (for demonstration only)
@@ -656,3 +656,25 @@ Mock.mock("https://www.demo.com/stationList", 'post', (options: any) => {
     },
   };
 });
+
+//Add/Edit station
+Mock.mock("https://www.demo.com/station/edit", 'post', (options: any) => {
+    const res: any = JSON.parse(options.body);
+    //Print the added or edited data here to indicate that the backend has received it.
+  console.log("add/edit:",res)
+  return {
+    code: 200,
+    success: true,
+    data: "successful",
+  };
+});
+
+//Delete station
+Mock.mock("https://www.demo.com/station/delete", "post", (options: any) => {
+  console.log("Delete Station", JSON.parse(options.body))
+  return {
+    code: 200,
+    success: true,
+    data: "successful",
+  };
+})

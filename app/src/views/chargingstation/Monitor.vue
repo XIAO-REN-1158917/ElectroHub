@@ -80,7 +80,17 @@
                     size="small"
                     @click="edit(scope.row)"
                     >Edit</el-button>
-                    <el-button type="danger" size="small">Delet</el-button>
+                    <el-Popconfirm 
+                    title="Are you sure to delete this station?"
+                    @confirm="handleDelete(scope.row.id)"
+                    >
+                        <template #reference>
+                            <el-button 
+                            type="danger" 
+                            size="small"
+                            >Delet</el-button>
+                        </template>                           
+                    </el-Popconfirm>
                 </template>
             </el-table-column>
         </el-table>
@@ -99,15 +109,17 @@
     <stationForm 
     :dialog-visible="visible"
     @close="visible=false"
+    @reload="loadStationListData"
     />
 </template>
 
 <script lang="ts" setup>
 import { onMounted, reactive, ref } from "vue";
-import { stationListApi } from "@/api/chargingStation"; 
+import { stationListApi,deleteStationApi } from "@/api/chargingStation"; 
 import stationForm from "./components/StationForm.vue";
 import type { RowType } from "@/types/station";
 import { useStationStore } from "@/store/station";
+import { ElMessage } from "element-plus";
 
 
 const select = ref("name")
@@ -118,9 +130,6 @@ const formParams = reactive({
 
 const loading = ref<boolean>(false)
 
-const handleAdd = () => {
-    console.log("handleAdd")
-}
 
 const stationListTableData = ref<RowType[]>([])
 const pageInfo = reactive({
@@ -128,6 +137,14 @@ const pageInfo = reactive({
     pageSize: 10,
     
 })
+
+const loadStationListData = async () => {
+    loading.value=true
+    const { data: { list, total } } = await stationListApi({ ...pageInfo,status:formParams.value,[select.value]:formParams.input })
+    loading.value=false
+    stationListTableData.value = list
+    totalRef.value=total
+}
 const totalRef=ref<number>(0)
 const handleSizeChange=((size:number) => {
     pageInfo.pageSize = size
@@ -138,13 +155,7 @@ const handleCurrentChange = ((page:number) => {
     loadStationListData()
 })
 
-const loadStationListData = async () => {
-    loading.value=true
-    const { data: { list, total } } = await stationListApi({ ...pageInfo,status:formParams.value,[select.value]:formParams.input })
-    loading.value=false
-    stationListTableData.value = list
-    totalRef.value=total
-}
+
 
 const handleReset = () => {
     pageInfo.page = 1
@@ -161,12 +172,32 @@ onMounted(() => {
 
 const visible = ref<boolean>(false)
 const stationStore = useStationStore()
-const {setRowData}=stationStore
+const {setRowData,resetFormData}=stationStore
 const edit = (row: RowType) => {
     setRowData(row)
     visible.value=true
 }
 
+const handleAdd = () => {
+    resetFormData()
+    visible.value = true
+}
+
+const handleDelete =async (id:string) => {
+    try {
+        const res = await deleteStationApi(id)
+        if (res.code == 200) {
+            ElMessage({
+                message: res.data,
+                type:"success"
+            })
+        }
+        loadStationListData()
+    } catch {
+        
+    }
+  
+}
 
 
 </script>
