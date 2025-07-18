@@ -678,3 +678,23 @@ Mock.mock("https://www.demo.com/station/delete", "post", (options: any) => {
     data: "successful",
   };
 })
+
+//Revenue Report - EChart
+Mock.mock("https://www.demo.com/revenueChart", "get", () => {
+  return {
+    code: 200,
+    success: true,
+    data: {
+      list:[
+        {
+          name:"Sales",
+          data:[60, 40, 120, 140, 160, 80, 140]
+        },
+        {
+          name:"Views",
+          data:[600, 400, 600, 700, 800, 400, 700]
+        },
+      ]
+    }
+  };
+})

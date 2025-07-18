@@ -99,12 +99,78 @@
                 </el-card>
             </el-col>
         </el-row>
-     
+        
+        <el-card class="mt">
+            <div ref="chartRef" style="width: 100%;height: 300px;"></div>
+        </el-card>
     </div>
 </template>
 
 <script lang="ts" setup>
 import addThousandSeparator from '@/utils/thousandsSeparator';
+import { revenueChartApi } from '@/api/chargingStation';
+import { useChart } from '@/hooks/useChart';
+import { ref, reactive } from "vue";
+
+const chartRef=ref(null)
+
+const setRevenueChartData=async ()=>{
+    const chartOptions = reactive({
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: []
+        },
+        xAxis: {
+            type: 'category',
+            data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul']
+        },
+        yAxis: [
+            {
+                type: 'value',
+                name: 'Sales',
+                position: 'left'
+            },
+            {
+                type: 'value',
+                name: 'Views',
+                position: 'right'
+            }
+        ],
+        series: [
+            {
+                name: '',
+                type: 'bar',
+                data: [],
+                yAxisIndex: 0,
+                itemStyle: {
+                    color: '#409eff'
+                }
+            },
+            {
+                name: '',
+                type: 'line',
+                data: [],
+                yAxisIndex: 1,
+                itemStyle: {
+                    color: '#409eff'
+                },
+                smooth: true
+            }
+        ]
+    });
+    const res = await revenueChartApi()
+    chartOptions.legend.data = res.data.list.map((item: any) => item.name);
+    for (let i = 0; i < res.data.list.length; i++) {
+        chartOptions.series[i].name = res.data.list[i].name
+        chartOptions.series[i].data = res.data.list[i].data
+    }
+    return chartOptions
+}
+
+useChart(chartRef,setRevenueChartData)
+
 
 </script>
 

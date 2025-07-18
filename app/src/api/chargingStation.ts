@@ -1,10 +1,11 @@
-import { post } from "@/utils/http"
+import { post, get } from "@/utils/http"
 import type { RowType } from "@/types/station";
 
 const Api = {
     StationList: "/station",
     EditStation: "/station/edit", 
-    DeleteStation:"/station/delete"
+    DeleteStation: "/station/delete",
+    RevenueChart:"/revenueChart"
     
 } as const;
 
@@ -28,4 +29,10 @@ function deleteStationApi(id: string) {
     return post(Api.DeleteStation,{id})
 }
 
-export {stationListApi,editStationApi,deleteStationApi}
+function revenueChartApi() {
+    return get(Api.RevenueChart)
+}
+
+
+
+export {stationListApi,editStationApi,deleteStationApi,revenueChartApi}
