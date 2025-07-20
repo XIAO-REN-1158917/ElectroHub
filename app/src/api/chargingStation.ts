@@ -1,10 +1,12 @@
-import { post } from "@/utils/http"
+import { post, get } from "@/utils/http"
 import type { RowType } from "@/types/station";
 
 const Api = {
     StationList: "/station",
     EditStation: "/station/edit", 
-    DeleteStation:"/station/delete"
+    DeleteStation: "/station/delete",
+    RevenueChart: "/revenueChart",
+    RevenueList:"/revenueList"
     
 } as const;
 
@@ -14,6 +16,12 @@ interface ListType{
     name?:string,
     id?:string,
     status:number
+}
+
+interface RevenueType{
+    page:number,
+    pageSize:number,
+    name:string
 }
 
 function stationListApi(data:ListType) {
@@ -28,4 +36,20 @@ function deleteStationApi(id: string) {
     return post(Api.DeleteStation,{id})
 }
 
-export {stationListApi,editStationApi,deleteStationApi}
+function revenueChartApi() {
+    return get(Api.RevenueChart)
+}
+
+function revenueListApi(data:RevenueType) {
+    return post(Api.RevenueList,data)
+}
+
+
+
+export {
+    stationListApi,
+    editStationApi,
+    deleteStationApi,
+    revenueChartApi,
+    revenueListApi
+}
