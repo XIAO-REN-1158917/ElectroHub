@@ -5,7 +5,8 @@ const Api = {
     StationList: "/station",
     EditStation: "/station/edit", 
     DeleteStation: "/station/delete",
-    RevenueChart:"/revenueChart"
+    RevenueChart: "/revenueChart",
+    RevenueList:"/revenueList"
     
 } as const;
 
@@ -15,6 +16,12 @@ interface ListType{
     name?:string,
     id?:string,
     status:number
+}
+
+interface RevenueType{
+    page:number,
+    pageSize:number,
+    name:string
 }
 
 function stationListApi(data:ListType) {
@@ -33,6 +40,16 @@ function revenueChartApi() {
     return get(Api.RevenueChart)
 }
 
+function revenueListApi(data:RevenueType) {
+    return post(Api.RevenueList,data)
+}
 
 
-export {stationListApi,editStationApi,deleteStationApi,revenueChartApi}
+
+export {
+    stationListApi,
+    editStationApi,
+    deleteStationApi,
+    revenueChartApi,
+    revenueListApi
+}

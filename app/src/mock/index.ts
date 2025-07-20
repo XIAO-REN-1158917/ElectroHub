@@ -698,3 +698,448 @@ Mock.mock("https://www.demo.com/revenueChart", "get", () => {
     }
   };
 })
+
+// Mock data for revenue list
+let chargingStation2 = [
+  {
+    "name": "Highland Ridge Hub",
+    "id": "VXZ10001",
+    "city": "Hastings",
+    "count": 135,
+    "electricity": 7563,
+    "parkingFee": 2356,
+    "serviceFee": 5633,
+    "month": 2155,
+    "member": 2698,
+    "percent": -5.3,
+    "mpercent": 2.3
+  },
+  {
+    "name": "Evergreen Plug-in Point",
+    "id": "VXZ10002",
+    "city": "Tauranga",
+    "count": 125,
+    "electricity": 8000,
+    "parkingFee": 3000,
+    "serviceFee": 7000,
+    "month": 5000,
+    "member": 3500,
+    "percent": 2.5,
+    "mpercent": 2.4
+  },
+  {
+    "name": "Brookside EV Depot",
+    "id": "VXZ10003",
+    "city": "Palmerston North",
+    "count": 123,
+    "electricity": 8200,
+    "parkingFee": 3100,
+    "serviceFee": 7100,
+    "month": 5200,
+    "member": 3600,
+    "percent": 3.0,
+    "mpercent": 3.5
+  },
+  {
+    "name": "Seaside Ridge Station",
+    "id": "VXZ10004",
+    "city": "New Plymouth",
+    "count": 110,
+    "electricity": 7800,
+    "parkingFee": 2900,
+    "serviceFee": 6900,
+    "month": 4900,
+    "member": 3400,
+    "percent": -1.8,
+    "mpercent": -2.6
+  },
+  {
+    "name": "Hilltop Charge Dock",
+    "id": "VXZ10005",
+    "city": "Blenheim",
+    "count": 125,
+    "electricity": 8300,
+    "parkingFee": 3200,
+    "serviceFee": 7200,
+    "month": 5300,
+    "member": 3700,
+    "percent": 3.5,
+    "mpercent": -0.1
+  },
+  {
+    "name": "Skyline Peak EV Bay",
+    "id": "VXZ10006",
+    "city": "Timaru",
+    "count": 115,
+    "electricity": 7900,
+    "parkingFee": 2950,
+    "serviceFee": 7050,
+    "month": 5100,
+    "member": 3450,
+    "percent": -2.2,
+    "mpercent": -0.8
+  },
+  {
+    "name": "Coastal View Station",
+    "id": "VXZ10007",
+    "city": "Taupo",
+    "count": 104,
+    "electricity": 7600,
+    "parkingFee": 2800,
+    "serviceFee": 6800,
+    "month": 4800,
+    "member": 3300,
+    "percent": 1.5,
+    "mpercent": 0.7
+  },
+  {
+    "name": "Summit Peak Station",
+    "id": "VXZ10008",
+    "city": "Gisborne",
+    "count": 129,
+    "electricity": 8400,
+    "parkingFee": 3250,
+    "serviceFee": 7250,
+    "month": 5400,
+    "member": 3750,
+    "percent": 4.0,
+    "mpercent": 6.2
+  },
+  {
+    "name": "Lakewood Charge Hub",
+    "id": "VXZ10009",
+    "city": "Whangarei",
+    "count": 123,
+    "electricity": 8150,
+    "parkingFee": 3100,
+    "serviceFee": 7100,
+    "month": 5150,
+    "member": 3500,
+    "percent": -2.8,
+    "mpercent": -0.4
+  },
+  {
+    "name": "Meadowlands Charging Port",
+    "id": "VXZ10010",
+    "city": "Napier",
+    "count": 123,
+    "electricity": 8100,
+    "parkingFee": 3050,
+    "serviceFee": 7050,
+    "month": 5100,
+    "member": 3450,
+    "percent": 2.7,
+    "mpercent": 3.4
+  },
+  {
+    "name": "Bluehaven Station",
+    "id": "VXZ10011",
+    "city": "Christchurch",
+    "count": 102,
+    "electricity": 7400,
+    "parkingFee": 2700,
+    "serviceFee": 6700,
+    "month": 4700,
+    "member": 3250,
+    "percent": 1.2,
+    "mpercent": 0.6
+  },
+  {
+    "name": "Glenridge EV Center",
+    "id": "VXZ10012",
+    "city": "Dunedin",
+    "count": 107,
+    "electricity": 7650,
+    "parkingFee": 2850,
+    "serviceFee": 6850,
+    "month": 4850,
+    "member": 3350,
+    "percent": 1.7,
+    "mpercent": 1.3
+  },
+  {
+    "name": "Westport Electric Point",
+    "id": "VXZ10013",
+    "city": "Nelson",
+    "count": 100,
+    "electricity": 7200,
+    "parkingFee": 2600,
+    "serviceFee": 6600,
+    "month": 4600,
+    "member": 3200,
+    "percent": -0.9,
+    "mpercent": 0.5
+  },
+  {
+    "name": "Pinehill EV Centre",
+    "id": "VXZ10014",
+    "city": "Whanganui",
+    "count": 117,
+    "electricity": 7950,
+    "parkingFee": 3000,
+    "serviceFee": 7100,
+    "month": 5150,
+    "member": 3500,
+    "percent": 2.6,
+    "mpercent": 3.1
+  },
+  {
+    "name": "Windmere Charging Bay",
+    "id": "VXZ10015",
+    "city": "Auckland",
+    "count": 106,
+    "electricity": 7700,
+    "parkingFee": 2800,
+    "serviceFee": 6900,
+    "month": 4950,
+    "member": 3400,
+    "percent": 2.0,
+    "mpercent": -1.5
+  },
+  {
+    "name": "Northfield Charger",
+    "id": "VXZ10016",
+    "city": "Invercargill",
+    "count": 115,
+    "electricity": 7900,
+    "parkingFee": 2950,
+    "serviceFee": 7050,
+    "month": 5100,
+    "member": 3450,
+    "percent": 2.3,
+    "mpercent": 0.9
+  },
+  {
+    "name": "Central Loop Hub",
+    "id": "VXZ10017",
+    "city": "Rotorua",
+    "count": 112,
+    "electricity": 7800,
+    "parkingFee": 2900,
+    "serviceFee": 7000,
+    "month": 5050,
+    "member": 3400,
+    "percent": -2.1,
+    "mpercent": 0.8
+  },
+  {
+    "name": "Riverbend Charging Dock",
+    "id": "VXZ10018",
+    "city": "Wellington",
+    "count": 117,
+    "electricity": 7900,
+    "parkingFee": 2950,
+    "serviceFee": 7050,
+    "month": 5100,
+    "member": 3450,
+    "percent": -2.4,
+    "mpercent": -2.7
+  },
+  {
+    "name": "Harbour Drive Station",
+    "id": "VXZ10019",
+    "city": "Hamilton",
+    "count": 112,
+    "electricity": 7750,
+    "parkingFee": 2850,
+    "serviceFee": 6950,
+    "month": 4950,
+    "member": 3350,
+    "percent": -1.9,
+    "mpercent": -1.1
+  },
+  {
+    "name": "Foxhill Charging Point",
+    "id": "VXZ10020",
+    "city": "Queenstown",
+    "count": 107,
+    "electricity": 7650,
+    "parkingFee": 2800,
+    "serviceFee": 6800,
+    "month": 4850,
+    "member": 3300,
+    "percent": 1.6,
+    "mpercent": -0.9
+  },
+  {
+    "name": "Stonebridge Station",
+    "id": "VXZ10021",
+    "city": "Hastings",
+    "count": 103,
+    "electricity": 7500,
+    "parkingFee": 2750,
+    "serviceFee": 6750,
+    "month": 4750,
+    "member": 3250,
+    "percent": 1.3,
+    "mpercent": 2.8
+  },
+  {
+    "name": "Southridge Charging Point",
+    "id": "VXZ10022",
+    "city": "Tauranga",
+    "count": 126,
+    "electricity": 8200,
+    "parkingFee": 3150,
+    "serviceFee": 7150,
+    "month": 5200,
+    "member": 3550,
+    "percent": 3.1,
+    "mpercent": 4.4
+  },
+  {
+    "name": "Greenway Charging Hub",
+    "id": "VXZ10023",
+    "city": "Palmerston North",
+    "count": 132,
+    "electricity": 8400,
+    "parkingFee": 3250,
+    "serviceFee": 7250,
+    "month": 5350,
+    "member": 3650,
+    "percent": -3.7,
+    "mpercent": -5.5
+  },
+  {
+    "name": "Clearwater Station",
+    "id": "VXZ10024",
+    "city": "New Plymouth",
+    "count": 108,
+    "electricity": 7700,
+    "parkingFee": 2850,
+    "serviceFee": 6850,
+    "month": 4900,
+    "member": 3350,
+    "percent": 1.8,
+    "mpercent": -2.3
+  },
+  {
+    "name": "Oakridge EV Spot",
+    "id": "VXZ10025",
+    "city": "Blenheim",
+    "count": 113,
+    "electricity": 7850,
+    "parkingFee": 2950,
+    "serviceFee": 6950,
+    "month": 5050,
+    "member": 3400,
+    "percent": 2.0,
+    "mpercent": 2.2
+  },
+  {
+    "name": "Oceanview Plug-in Hub",
+    "id": "VXZ10026",
+    "city": "Timaru",
+    "count": 123,
+    "electricity": 8100,
+    "parkingFee": 3050,
+    "serviceFee": 7050,
+    "month": 5150,
+    "member": 3500,
+    "percent": -2.8,
+    "mpercent": -3.2
+  },
+  {
+    "name": "Silverlake EV Station",
+    "id": "VXZ10027",
+    "city": "Taupo",
+    "count": 120,
+    "electricity": 8000,
+    "parkingFee": 3000,
+    "serviceFee": 7000,
+    "month": 5100,
+    "member": 3450,
+    "percent": 2.4,
+    "mpercent": 0.8
+  },
+  {
+    "name": "Redcliff Charger Port",
+    "id": "VXZ10028",
+    "city": "Gisborne",
+    "count": 117,
+    "electricity": 7950,
+    "parkingFee": 3000,
+    "serviceFee": 7100,
+    "month": 5150,
+    "member": 3500,
+    "percent": 2.6,
+    "mpercent": 3.9
+  },
+  {
+    "name": "Sunset Valley Station",
+    "id": "VXZ10029",
+    "city": "Whangarei",
+    "count": 130,
+    "electricity": 8250,
+    "parkingFee": 3150,
+    "serviceFee": 7150,
+    "month": 5250,
+    "member": 3550,
+    "percent": -3.4,
+    "mpercent": -2.3
+  },
+  {
+    "name": "Meadowfield Station",
+    "id": "VXZ10030",
+    "city": "Napier",
+    "count": 114,
+    "electricity": 7850,
+    "parkingFee": 2950,
+    "serviceFee": 6950,
+    "month": 5050,
+    "member": 3400,
+    "percent": 2.2,
+    "mpercent": -1.4
+  },
+  {
+    "name": "Fernhill Charger Bay",
+    "id": "VXZ10031",
+    "city": "Christchurch",
+    "count": 114,
+    "electricity": 7850,
+    "parkingFee": 2950,
+    "serviceFee": 6950,
+    "month": 5050,
+    "member": 3400,
+    "percent": 2.2,
+    "mpercent": 1.8
+  },
+  {
+    "name": "Maple Junction Station",
+    "id": "VXZ10032",
+    "city": "Dunedin",
+    "count": 129,
+    "electricity": 8350,
+    "parkingFee": 3200,
+    "serviceFee": 7200,
+    "month": 5300,
+    "member": 3600,
+    "percent": -3.6,
+    "mpercent": -2.6
+  }
+];
+
+// backup
+const originalChargingStation2 = JSON.parse(JSON.stringify(chargingStation2));
+// revenue list API
+Mock.mock("https://www.demo.com/revenueList", 'post', (options: any) => {
+  chargingStation2 = originalChargingStation2
+  const { name = "", page = 1, pageSize = 10 } = options.body ? JSON.parse(options.body) : {}
+  // filter
+  console.log("revenue statistic",name,page,pageSize)
+  if (name) {
+    chargingStation2 = chargingStation2.filter(item => item.name.includes(name));
+  }
+  // pagination
+  const total = chargingStation2.length;
+  const start = (page - 1) * pageSize;
+  const paginatedItems = chargingStation2.slice(start, start + pageSize);
+  return {
+    code: 200,
+    success: true,
+    data:{
+      list:paginatedItems,
+      total,
+    }  
+  };
+});

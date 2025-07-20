@@ -103,16 +103,66 @@
         <el-card class="mt">
             <div ref="chartRef" style="width: 100%;height: 300px;"></div>
         </el-card>
+
+        <el-card class="mt">
+            <el-input v-model="name" style="max-width: 400px;" placeholder="Filter by Station's name">
+                <template #append>
+                    <el-button icon="Search" @click="loadRevenueListData"></el-button>
+                </template>
+            </el-input>            
+            <el-table :data="revenueTableData" v-loading="loading">
+                <el-table-column type="index" label="Index" width="80"></el-table-column>
+                <el-table-column label="Name" prop="name"></el-table-column>
+                <el-table-column label="ID"  prop="id"></el-table-column>
+                <el-table-column label="City"  prop="city"></el-table-column>
+                <el-table-column label="Total Piles"  prop="count"></el-table-column>
+                <el-table-column label="Revenue Today" prop="day" sortable width="140">
+                    <template #default="scope">
+                        <span>{{ scope.row.day }}</span>
+                        <el-tag :type="scope.row.percent>0?'success':'danger'" class="ml">
+                            {{scope.row.percent>0?"+"+scope.row.percent+"%":scope.row.percent+"%"}}
+                        </el-tag>
+                    </template>
+                </el-table-column>
+                <el-table-column label="Monthly Revenue(k)"  prop="month" width="130">
+                    <template #default="scope">
+                        <span>{{ scope.row.month }}</span>
+                        <el-tag :type="scope.row.mpercent>0?'success':'danger'" class="ml">
+                            {{scope.row.mpercent>0?"+"+scope.row.mpercent+"%":scope.row.mpercent+"%"}}
+                        </el-tag>
+                    </template>
+                </el-table-column>
+                <el-table-column label="Electricity Revenue" prop="electricity"></el-table-column>
+                <el-table-column label="Parking Revenue" prop="parkingFee"></el-table-column>
+                <el-table-column label="Service Revenue" prop="serviceFee"></el-table-column>
+                <el-table-column label="Membership Top-up" prop="member"></el-table-column>
+            </el-table>
+            <el-pagination 
+                class="fr mt mb"
+                v-model:current-page="pageInfo.page" 
+                v-model:page-size="pageInfo.pageSize"
+                :page-sizes="[10, 20, 30, 40]" 
+                layout="sizes, prev, pager, next, jumper,total" 
+                :total="totals" 
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange" 
+                background
+            />
+        </el-card>
     </div>
 </template>
 
 <script lang="ts" setup>
 import addThousandSeparator from '@/utils/thousandsSeparator';
-import { revenueChartApi } from '@/api/chargingStation';
+import { revenueChartApi,revenueListApi } from '@/api/chargingStation';
 import { useChart } from '@/hooks/useChart';
-import { ref, reactive } from "vue";
+import { usePagination } from '@/hooks/usePagination';
+import { ref, reactive, onMounted } from "vue";
 
-const chartRef=ref(null)
+const chartRef = ref(null)
+const revenueTableData = ref([])
+const loading = ref<boolean>(false)
+const name=ref<string>("")
 
 const setRevenueChartData=async ()=>{
     const chartOptions = reactive({
@@ -169,8 +219,27 @@ const setRevenueChartData=async ()=>{
     return chartOptions
 }
 
-useChart(chartRef,setRevenueChartData)
+useChart(chartRef, setRevenueChartData)
 
+
+const loadRevenueListData = async () => {
+    loading.value=true 
+    const { data: { list, total } } = await revenueListApi({ ...pageInfo,name:name.value })
+    setTotals(total)
+    loading.value=false 
+    revenueTableData.value = list
+    revenueTableData.value=list.map((item:any)=>({
+        ...item,
+        day:item.electricity+item.parkingFee+item.serviceFee+item.member
+  }))
+    
+}
+
+const {totals,pageInfo,handleCurrentChange,handleSizeChange,setTotals}=usePagination(loadRevenueListData)
+
+onMounted(() => {
+    loadRevenueListData()
+})
 
 </script>
 
