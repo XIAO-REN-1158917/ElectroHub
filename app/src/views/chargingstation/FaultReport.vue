@@ -9,7 +9,7 @@
         filterable
         >
         <el-option 
-        v-for="item in options" 
+        v-for="item in stationList" 
         :key="item.id" 
         :value="item.name" 
         :label="item.name"></el-option>
@@ -17,33 +17,39 @@
     </el-card>
 
     <el-card class="mt">
-        <el-radio-group size="large">
-            <el-radio-button label="All" :value="0" />
-            <el-radio-button label="Idle" :value="1" />
-            <el-radio-button label="In Use" :value="2" />
-            <el-radio-button label="Connecting" :value="3" />
-            <el-radio-button label="In Line" :value="4" />
-            <el-radio-button label="Booked" :value="5" />
-            <el-radio-button label="Fault" :value="6" />
+        <el-radio-group size="large" v-model="radio">
+            <el-radio-button :label="`All(${allCount})`" :value="0" />
+            <el-radio-button :label="`Idle(${checkCount(1)})`" :value="1" />
+            <el-radio-button :label="`In Use(${checkCount(2)})`" :value="2" />
+            <el-radio-button :label="`Connecting(${checkCount(3)})`" :value="3" />
+            <el-radio-button :label="`In queue(${checkCount(4)})`" :value="4" />
+            <el-radio-button :label="`Booked(${checkCount(5)})`" :value="5" />
+            <el-radio-button :label="`Out of Order(${checkCount(6)})`" :value="6" />
         </el-radio-group>
     </el-card>
 
     <el-card class="mt">
         <el-row :gutter="20">
-            <el-col :span="6">
+            <el-col :span="6" v-for="item in pileList" :key="item.id">
                 <div class="item">
                     <div class="pic">
-                        <p>Idle</p>
-                        <img :src="free" width="100px">
-                        <p>80%</p>
+                        <p v-if="item.status===1">Idle</p>
+                        <p v-else-if="item.status===2">In Use</p>
+                        <p v-else-if="item.status===3">Connecting</p>
+                        <p v-else-if="item.status===4">In queue</p>
+                        <p v-else-if="item.status===5">Booked</p>
+                        <p v-else-if="item.status===6">Out of Order</p>
+                        <img :src="item.status===1?free:(item.status===6?outline:ing)" width="100px">
+                        <p v-if="item.status===2">{{item.percent}}</p>
+                        <p v-else>0%</p>
                     </div>
                     <div class="info">
-                        <h3>CD001</h3>
+                        <h3>{{ item.id }}</h3>
                         <hr class="mb">
-                        <p>1</p>
-                        <p>2</p>
-                        <p>3</p>
-                        <p>4</p>
+                        <p>Voltage:{{ item.voltage }}</p>
+                        <p>Current:{{ item.current }}</p>
+                        <p>Power:{{ item.power }}</p>
+                        <p>Temp:{{ item.tem }}</p>
                     </div>
                 </div>
                 <div class="btn">
@@ -63,15 +69,22 @@
 
 <script lang="ts" setup>
 import free from "@/assets/free.png"
+import outline from "@/assets/outline.png"
+import ing from "@/assets/ing.png"
 import { currentListApi } from "@/api/chargingStation";
-import { onMounted,ref } from "vue";
+import { onMounted,ref,computed } from "vue";
 
 //We’re not strictly specifying the type for the mock data here — in a real project, it would depend on the development requirements.
-const options = ref<any>([])
+const stationList = ref<any>([]) //  for drop box
+const pileList = ref<any>([]) //  for list
 
 const loadCurrentListData = async () => {
+    // const res = await currentListApi()
     const {data} = await currentListApi()
-    options.value=data
+    // console.log(res)
+    stationList.value = data
+    pileList.value = data[0].list
+    // console.log("current list",currentDataList.value[0].status)
 }
 
 onMounted(() => {
@@ -79,7 +92,14 @@ onMounted(() => {
 })
 
 
-const value=ref("")
+const value = ref<string>("")
+const radio=ref<number>(0)
+
+function checkCount(num: number) {
+    return pileList.value.filter((item: any) => item.status == num ).length
+}
+
+const allCount = computed(() => checkCount(1) + checkCount(2) + checkCount(3) + checkCount(4) + checkCount(5) + checkCount(6))
 
 </script>
 

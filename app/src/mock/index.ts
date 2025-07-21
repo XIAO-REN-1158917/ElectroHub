@@ -1151,16 +1151,15 @@ let chargingPile = [
     name: "UrbanChargeHub50",
     list: [
       { id: "CD1001", voltage: "314v", current: "212.2A", power: "21KW", tem: "32°c", status: 1,
-    record:[
-        {time:"12:08:17",msg:"Charged 80 kWh, cost $80."},
-        {time:"13:12:09",msg:"Charged50kWh，cost $50."},
-        {time:"13:15:22",msg:"Charged60kWh，cost $60."},
-        {time:"16:22:33",msg:"Charged70kWh，cost $70."},
-        {time:"17:27:17",msg:"Charged90kWh，cost $90."},
-        {time:"18:08:33",msg:"Charged100kWh，cost $100."},
-    ]
-    
-    },
+        record:[
+            {time:"12:08:17",msg:"Charged 80 kWh, cost $80."},
+            {time:"13:12:09",msg:"Charged50kWh，cost $50."},
+            {time:"13:15:22",msg:"Charged60kWh，cost $60."},
+            {time:"16:22:33",msg:"Charged70kWh，cost $70."},
+            {time:"17:27:17",msg:"Charged90kWh，cost $90."},
+            {time:"18:08:33",msg:"Charged100kWh，cost $100."},
+        ]
+      },
       { id: "CD1002", voltage: "314v", current: "212.2A", power: "21KW", tem: "29°c", status: 2, percent: "70%" },
       { id: "CD1003", voltage: "314v", current: "212.2A", power: "21KW", tem: "32°c", status: 1 },
       { id: "CD1004", voltage: "314v", current: "212.2A", power: "21KW", tem: "32°c", status: 2, percent: "70%" },
