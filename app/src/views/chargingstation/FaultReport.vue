@@ -1,6 +1,19 @@
 <template>
     <el-card>
-        <el-select style="width:300px" placeholder="Select Station"></el-select>
+        <!-- The fuzzy search functionality here is for demonstration purposes only 
+         — in real projects, fuzzy search is typically implemented on the backend. -->
+        <el-select 
+        style="width:300px" 
+        placeholder="Select Station"
+        v-model="value"
+        filterable
+        >
+        <el-option 
+        v-for="item in options" 
+        :key="item.id" 
+        :value="item.name" 
+        :label="item.name"></el-option>
+        </el-select>
     </el-card>
 
     <el-card class="mt">
@@ -50,6 +63,24 @@
 
 <script lang="ts" setup>
 import free from "@/assets/free.png"
+import { currentListApi } from "@/api/chargingStation";
+import { onMounted,ref } from "vue";
+
+//We’re not strictly specifying the type for the mock data here — in a real project, it would depend on the development requirements.
+const options = ref<any>([])
+
+const loadCurrentListData = async () => {
+    const {data} = await currentListApi()
+    options.value=data
+}
+
+onMounted(() => {
+    loadCurrentListData()
+})
+
+
+const value=ref("")
+
 </script>
 
 <style lang="less" scoped>
