@@ -5,7 +5,7 @@
         <el-select 
         style="width:300px" 
         placeholder="Select Station"
-        v-model="value"
+        v-model="stationName"
         filterable
         >
         <el-option 
@@ -72,30 +72,36 @@ import free from "@/assets/free.png"
 import outline from "@/assets/outline.png"
 import ing from "@/assets/ing.png"
 import { currentListApi } from "@/api/chargingStation";
-import { onMounted,ref,computed } from "vue";
+import { onMounted,ref,computed,watch } from "vue";
 
 //We’re not strictly specifying the type for the mock data here — in a real project, it would depend on the development requirements.
 const stationList = ref<any>([]) //  for drop box
 const pileList = ref<any>([]) //  for list and unmutable
 const pileListCopyForFilter = ref<any>([])
+const stationName = ref<string>("")
+const radio = ref<number>(0)
 
 const loadCurrentListData = async () => {
     // const res = await currentListApi()
     const {data} = await currentListApi()
     // console.log(res)
     stationList.value = data
+    // console.log("station name",data)
     pileList.value = data[0].list
     pileListCopyForFilter.value = data[0].list
     // console.log("current list",currentDataList.value[0].status)
+    stationName.value=stationList.value[0].name
 }
+
+
+
+
+
 
 onMounted(() => {
     loadCurrentListData()
+    
 })
-
-
-const value = ref<string>("")
-const radio=ref<number>(0)
 
 function checkCount(num: number) {
     return pileList.value.filter((item: any) => item.status == num ).length
@@ -109,6 +115,13 @@ const handleChange = () => {
         pileListCopyForFilter.value=pileListCopyForFilter.value.filter((item:any)=>item.status===radio.value)
     }
 }
+
+watch(stationName, () => {
+    const targetStation = stationList.value.filter((item:any) => item.name === stationName.value)
+    pileList.value=targetStation[0].list
+    pileListCopyForFilter.value = targetStation[0].list
+    radio.value=0
+})
 
 </script>
 
