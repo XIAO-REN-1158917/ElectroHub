@@ -55,10 +55,24 @@
                 <div class="btn">
                     <div class="divder"></div>
                     <div>
-                        <p class="fl ml" style="font-size: 12px;color: #999;">No Fault</p>
+                        <p class="fl ml" :style="{ fontSize: '12px', color: item.status === 6 ? 'red' : '#999' }">
+                            {{ item.status === 6 ? 'Alerts' : 'No alerts' }}
+                        </p>
                         <div class="fr" style="text-align: right;">
-                            <el-button size="small">Service Record</el-button>
-                            <el-button size="small" type="primary">Usage Record</el-button>
+                            <el-button size="small" disabled>Service Record</el-button>
+                            <el-popover placement="right" :width="300" trigger="click">
+                                <template #reference>
+                                    <el-button size="small" type="primary">Usage Record</el-button>
+                                </template>
+                                <h3 class="mb">Usage Record</h3>
+                                <p>For the demo, only the first charging pile of the first station has mock data.</p>
+                                <el-timeline style="max-width: 600px">
+                                    <el-timeline-item :timestamp="j.time" v-for="j in item.record" :key="j.time" :hollow="true" type="primary">
+                                        {{ j.msg }}
+                                    </el-timeline-item>
+                                    
+                                </el-timeline>
+                            </el-popover> 
                         </div>
                     </div>
                 </div>
@@ -92,10 +106,6 @@ const loadCurrentListData = async () => {
     // console.log("current list",currentDataList.value[0].status)
     stationName.value=stationList.value[0].name
 }
-
-
-
-
 
 
 onMounted(() => {
