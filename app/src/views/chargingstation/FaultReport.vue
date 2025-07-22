@@ -17,7 +17,7 @@
     </el-card>
 
     <el-card class="mt">
-        <el-radio-group size="large" v-model="radio">
+        <el-radio-group size="large" v-model="radio" @change="handleChange">
             <el-radio-button :label="`All(${allCount})`" :value="0" />
             <el-radio-button :label="`Idle(${checkCount(1)})`" :value="1" />
             <el-radio-button :label="`In Use(${checkCount(2)})`" :value="2" />
@@ -30,7 +30,7 @@
 
     <el-card class="mt">
         <el-row :gutter="20">
-            <el-col :span="6" v-for="item in pileList" :key="item.id">
+            <el-col :span="6" v-for="item in pileListCopyForFilter" :key="item.id">
                 <div class="item">
                     <div class="pic">
                         <p v-if="item.status===1">Idle</p>
@@ -76,7 +76,8 @@ import { onMounted,ref,computed } from "vue";
 
 //We’re not strictly specifying the type for the mock data here — in a real project, it would depend on the development requirements.
 const stationList = ref<any>([]) //  for drop box
-const pileList = ref<any>([]) //  for list
+const pileList = ref<any>([]) //  for list and unmutable
+const pileListCopyForFilter = ref<any>([])
 
 const loadCurrentListData = async () => {
     // const res = await currentListApi()
@@ -84,6 +85,7 @@ const loadCurrentListData = async () => {
     // console.log(res)
     stationList.value = data
     pileList.value = data[0].list
+    pileListCopyForFilter.value = data[0].list
     // console.log("current list",currentDataList.value[0].status)
 }
 
@@ -100,6 +102,13 @@ function checkCount(num: number) {
 }
 
 const allCount = computed(() => checkCount(1) + checkCount(2) + checkCount(3) + checkCount(4) + checkCount(5) + checkCount(6))
+
+const handleChange = () => {
+    pileListCopyForFilter.value= pileList.value
+    if (radio.value !== 0) {
+        pileListCopyForFilter.value=pileListCopyForFilter.value.filter((item:any)=>item.status===radio.value)
+    }
+}
 
 </script>
 

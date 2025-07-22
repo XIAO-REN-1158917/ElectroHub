@@ -1119,7 +1119,7 @@ let chargingStation2 = [
   }
 ];
 
-// backup
+// backup - for filter
 const originalChargingStation2 = JSON.parse(JSON.stringify(chargingStation2));
 // revenue list API
 Mock.mock("https://www.demo.com/revenueList", 'post', (options: any) => {
