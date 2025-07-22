@@ -6,7 +6,8 @@ const Api = {
     EditStation: "/station/edit", 
     DeleteStation: "/station/delete",
     RevenueChart: "/revenueChart",
-    RevenueList:"/revenueList"
+    RevenueList: "/revenueList",
+    CurrentList:"/currentList"
     
 } as const;
 
@@ -44,6 +45,10 @@ function revenueListApi(data:RevenueType) {
     return post(Api.RevenueList,data)
 }
 
+function currentListApi() {
+    return post(Api.CurrentList)
+}
+
 
 
 export {
@@ -51,5 +56,6 @@ export {
     editStationApi,
     deleteStationApi,
     revenueChartApi,
-    revenueListApi
+    revenueListApi,
+    currentListApi
 }
