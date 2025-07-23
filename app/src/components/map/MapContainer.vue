@@ -1,9 +1,8 @@
 <template>
-    <div ref="mapRef" id="map" style="width: 100%; height: 400px;"></div>
+    <div ref="mapRef" id="container" ></div>
 </template>
 
 <script lang="ts" setup>
-console.log(import.meta.env.VITE_TEST_VALUE)
 import { onMounted,ref } from 'vue'
 
 const mapRef = ref<HTMLElement | null>(null)
@@ -32,7 +31,6 @@ function loadGoogleMapsApi(): Promise<void> {
 
     const script = document.createElement('script')
     script.src = `https://maps.googleapis.com/maps/api/js?key=${import.meta.env.VITE_GOOGLE_MAPS_API_KEY}&v=weekly`
-
     script.async = true
     script.defer = true
     script.onload = () => resolve()
@@ -41,3 +39,7 @@ function loadGoogleMapsApi(): Promise<void> {
   })
 }
 </script>
+
+<style lang="less" scoped>
+#container{width: 100%;height: 80vh;}
+</style>
