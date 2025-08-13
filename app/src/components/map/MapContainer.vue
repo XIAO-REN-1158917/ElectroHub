@@ -17,8 +17,8 @@ if (!mapRef.value) {
     return
   }
 new Map(mapRef.value, {
-    center: { lat: -36.8485, lng: 174.7633 },
-    zoom: 13,
+    center: { lat: -41.2866, lng: 174.7756 },
+    zoom: 6,
   })
 })
 
