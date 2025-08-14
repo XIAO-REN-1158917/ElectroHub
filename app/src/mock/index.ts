@@ -1957,3 +1957,75 @@ Mock.mock("https://www.demo.com/currentList", "post", () => {
     data: chargingPile
   }
 })
+
+const stations = [
+  {
+    position: [174.7762, -41.2865], // Wellington
+    title: "Wellington Central Charging Station",
+    status: 1,
+    count: 135,
+  },
+  {
+    position: [174.7633, -36.8485], // Auckland
+    title: "Auckland Waterfront Charging Station",
+    status: 2,
+    count: 125,
+  },
+  {
+    position: [172.6362, -43.5321], // Christchurch
+    title: "Christchurch Riverside Charging Station",
+    status: 2,
+    count: 123,
+  },
+  {
+    position: [170.5036, -45.8742], // Dunedin
+    title: "Dunedin Harbour Charging Station",
+    status: 1,
+    count: 110,
+  },
+  {
+    position: [175.2793, -37.7870], // Hamilton
+    title: "Hamilton Gardens Charging Station",
+    status: 5,
+    count: 125,
+  },
+  {
+    position: [176.9150, -39.4928], // Napier
+    title: "Napier Marine Parade Charging Station",
+    status: 4,
+    count: 115,
+  },
+  {
+    position: [173.2471, -41.2706], // Nelson
+    title: "Nelson City Centre Charging Station",
+    status: 1,
+    count: 104,
+  },
+  {
+    position: [171.6010, -42.4500], // Greymouth
+    title: "Greymouth Riverside Charging Station",
+    status: 2,
+    count: 129,
+  },
+  {
+    position: [176.0841, -38.1387], // Rotorua
+    title: "Rotorua Lakeside Charging Station",
+    status: 2,
+    count: 123,
+  },
+  {
+    position: [168.6626, -45.0312], // Queenstown
+    title: "Queenstown Lakes Charging Station",
+    status: 1,
+    count: 123,
+  },
+];
+
+//Map API
+Mock.mock("https://www.demo.com/mapList", "post", () => {
+  return {
+    code: 200,
+    success: true,
+    data: stations
+  }
+})
