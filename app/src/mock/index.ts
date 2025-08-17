@@ -2029,3 +2029,27 @@ Mock.mock("https://www.demo.com/mapList", "post", () => {
     data: stations
   }
 })
+
+//Operations-Orders API
+Mock.mock('https://www.demo.com/orderList', 'post', (options: any) => {
+  const { pageSize } = JSON.parse(options.body);
+  console.log("OrderQueryParams", JSON.parse(options.body))
+  return {
+    code: 200,
+    message: "Successful",
+    data: Mock.mock({
+      [`list|${pageSize}`]: [{
+        'orderNo': '@string("number", 6)',
+        'date': '@date("dd-mm-yyyy")',//Order date
+        'startTime': "08:00:23",
+        'endTime': "09:10:11",
+        "equipmentNo|1": ['B109', 'C227', 'C106', "D158"],
+        'amount|1': [66.5,88.9,22.7,36.5,42.0],
+        'paymentMethod|1': ["Card", "POLi", "Gift",],
+        'status|1': [2, 3, 4],
+      }],
+      "total": 54
+    })
+    // Generate 55 pieces
+  }
+});
