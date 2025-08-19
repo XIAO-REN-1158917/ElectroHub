@@ -64,7 +64,7 @@
             </el-table-column>
             <el-table-column label="Operate" width="160">
                 <template #default="scope">
-                    <el-button type="primary" size="small">Details</el-button>
+                    <el-button type="primary" size="small" @click="handleOrderDetail(scope.row.orderNo)">Details</el-button>
                     <el-button type="danger" size="small">Delete</el-button>
                 </template>
             </el-table-column>
@@ -84,10 +84,12 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue"
+import { ref, watch } from "vue"
 import { useQueryTable } from "@/hooks/useQueryTable"
 import { batchDeleteApi } from "@/api/operations"
 import { ElMessage } from "element-plus"
+import { useRouter,useRoute } from "vue-router"
+import { useTabsStore } from "@/store/tabs"
 
 interface OrderQueryType{
     orderNo: string,
@@ -168,5 +170,24 @@ const handleBatchDelete = async() => {
         console.log(error)
     }
 }
-    
+
+const router = useRouter()
+const tabStore=useTabsStore()
+const {addTab,setCurrentTab}=tabStore
+const handleOrderDetail = (orderNo: string) => {
+    console.log("From Orders view: order No.",orderNo)
+    addTab(orderNo + " Detail", "/operations/detail?orderNo="+orderNo, "Share")
+    setCurrentTab(orderNo + " Detail", "/operations/detail?orderNo="+orderNo)
+    router.push("/operations/detail?orderNo="+orderNo)
+}
+
+const route = useRoute()
+
+watch(() => route.name, (to, from) => {
+    // console.log(to, from)
+    if (to == "orders" && from != "detail") {
+        loadData()
+    }
+})
+
 </script>

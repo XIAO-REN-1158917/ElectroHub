@@ -1,3 +1,4 @@
+import { KeepAlive } from "vue";
 import type { RouteRecordRaw } from "vue-router";
 
 const routes: RouteRecordRaw[] = [
@@ -35,12 +36,18 @@ const routes: RouteRecordRaw[] = [
             {
                 path: "/operations/orders",
                 name: "orders",
-                component: () => import("@/views/operations/Orders.vue")
+                component: () => import("@/views/operations/Orders.vue"),
+                meta: {
+                    keepAlive:true
+                }
             },
             {
                 path: "/operations/detail",
                 name: "detail",
-                component: () => import("@/views/operations/Detail.vue")
+                component: () => import("@/views/operations/Detail.vue"),
+                meta: {
+                    keepAlive:true
+                }
             },
             {
                 path: "/operations/total",
