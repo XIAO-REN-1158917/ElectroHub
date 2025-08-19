@@ -2064,3 +2064,14 @@ Mock.mock('https://www.demo.com/batchDelete', "post", (options: any) => {
     data: "Delete Successfully"
   }
 })
+
+//Operations-orders-detail API
+Mock.mock('https://www.demo.com/orders/detail', "post", (options: any) => {
+  
+ console.log("The backend got it:", options.body)
+  return {
+    code: 200,
+    message: "successful",
+    data: options.body+" Detail"
+  }
+})
