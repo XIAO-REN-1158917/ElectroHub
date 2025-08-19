@@ -41,11 +41,13 @@
         </el-row>
     </el-card>
     <el-card class="mt">
-        <el-button type="danger">Batch Delet</el-button>
-        <el-button type="primary" icon="Download">Export to Excel</el-button>
+        <el-button type="danger" :disabled="!selectionList.length">Batch Delet</el-button>
+        <el-button type="primary" icon="Download" :disabled="!selectionList.length">Export to Excel</el-button>
     </el-card>
     <el-card class="mt">
-        <el-table :data="tableData" v-loading="loading">
+        <el-table :data="tableData" v-loading="loading" @selection-change="handleSelectionChange">
+            <el-table-column type="selection" width="55"></el-table-column>
+            <el-table-column type="index" label="#"></el-table-column>
             <el-table-column label="Order No." prop="orderNo"></el-table-column>
             <el-table-column label="Order Date" prop="date"></el-table-column>
             <el-table-column label="Start" prop="startTime"></el-table-column>
@@ -53,7 +55,13 @@
             <el-table-column label="Equip. No." prop="equipmentNo"></el-table-column>
             <el-table-column label="Amount" prop="amount"></el-table-column>
             <el-table-column label="Payment Method" prop="paymentMethod"></el-table-column>
-            <el-table-column label="Status" prop="status"></el-table-column>
+            <el-table-column label="Status" prop="status">
+                <template #default="scope">
+                    <el-tag type="success" v-if="scope.row.status==2">In Progress</el-tag>
+                    <el-tag type="primary" v-if="scope.row.status==3">Fulfilled</el-tag>
+                    <el-tag type="warning" v-if="scope.row.status==4">Exception</el-tag>
+                </template>
+            </el-table-column>
             <el-table-column label="Operate" width="160">
                 <template #default="scope">
                     <el-button type="primary" size="small">Details</el-button>
@@ -137,6 +145,11 @@ const handleResetQueryForm = () => {
         endDate:""
     }
     resetPagination()
+}
+
+const selectionList=ref<OrderTableRowType[]>([])
+const handleSelectionChange=(selection:OrderTableRowType[]) => {
+    selectionList.value=selection
 }
     
 </script>
