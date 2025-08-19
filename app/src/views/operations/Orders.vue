@@ -41,7 +41,7 @@
         </el-row>
     </el-card>
     <el-card class="mt">
-        <el-button type="danger" :disabled="!selectionList.length">Batch Delet</el-button>
+        <el-button type="danger" :disabled="!selectionList.length" @click="handleBatchDelete">Batch Delet</el-button>
         <el-button type="primary" icon="Download" :disabled="!selectionList.length">Export to Excel</el-button>
     </el-card>
     <el-card class="mt">
@@ -86,6 +86,8 @@
 <script lang="ts" setup>
 import { ref } from "vue"
 import { useQueryTable } from "@/hooks/useQueryTable"
+import { batchDeleteApi } from "@/api/operations"
+import { ElMessage } from "element-plus"
 
 interface OrderQueryType{
     orderNo: string,
@@ -148,8 +150,23 @@ const handleResetQueryForm = () => {
 }
 
 const selectionList=ref<OrderTableRowType[]>([])
-const handleSelectionChange=(selection:OrderTableRowType[]) => {
+const handleSelectionChange = (selection: OrderTableRowType[]) => {
     selectionList.value=selection
+}
+
+const handleBatchDelete = async() => {
+    try {
+        const res = await batchDeleteApi(selectionList.value.map((item: OrderTableRowType) => item.orderNo))
+        if (res.code===200) {
+            ElMessage({
+                message: res.data,
+                type:"success"
+            })
+            loadData()
+        }
+    } catch (error) {
+        console.log(error)
+    }
 }
     
 </script>

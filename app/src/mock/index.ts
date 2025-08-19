@@ -2053,3 +2053,14 @@ Mock.mock('https://www.demo.com/orderList', 'post', (options: any) => {
     // Generate 55 pieces
   }
 });
+
+//Operations-Orders batch delete API
+Mock.mock('https://www.demo.com/batchDelete', "post", (options: any) => {
+  const { order } = JSON.parse(options.body)
+  console.log("batch delete orders",JSON.stringify(order) )
+  return {
+    code: 200,
+    message: "successful",
+    data: "Delete Successfully"
+  }
+})
