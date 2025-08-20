@@ -53,7 +53,7 @@ const menulist = [
                 icon: "Share"
             },
             {
-                name: "Total",
+                name: "Tariff Config",
                 url: "/operations/total",
                 icon: "Money"
             },
@@ -137,7 +137,7 @@ const menulist2 = [
                 icon: "Share"
             },
             {
-                name: "Total",
+                name: "Tariff Config",
                 url: "/operations/total",
                 icon: "Money"
             },
