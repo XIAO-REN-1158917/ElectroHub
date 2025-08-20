@@ -42,7 +42,7 @@
     </el-card>
     <el-card class="mt">
         <el-button type="danger" :disabled="!selectionList.length" @click="handleBatchDelete">Batch Delet</el-button>
-        <el-button type="primary" icon="Download" :disabled="!selectionList.length">Export to Excel</el-button>
+        <el-button type="primary" icon="Download" :disabled="!selectionList.length" @click="handleExportToExcel">Export to Excel</el-button>
     </el-card>
     <el-card class="mt">
         <el-table :data="tableData" v-loading="loading" @selection-change="handleSelectionChange">
@@ -90,6 +90,8 @@ import { batchDeleteApi } from "@/api/operations"
 import { ElMessage } from "element-plus"
 import { useRouter,useRoute } from "vue-router"
 import { useTabsStore } from "@/store/tabs"
+import * as XLSX from "xlsx"
+import {saveAs} from "file-saver"
 
 interface OrderQueryType{
     orderNo: string,
@@ -189,5 +191,14 @@ watch(() => route.name, (to, from) => {
         loadData()
     }
 })
+
+const handleExportToExcel = () => {
+    const ws = XLSX.utils.json_to_sheet(selectionList.value)
+    const wb = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1")
+    const wbout = XLSX.write(wb, { bookType: "xlsx", type: "array" })
+    const blob = new Blob([wbout], { type: "application/octet-stream" })
+    saveAs(blob,"Orders.xlsx")
+}
 
 </script>
