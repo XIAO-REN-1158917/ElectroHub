@@ -8,8 +8,10 @@
                     </template>
                 </el-input>
                 <el-tree 
+                class="mt"
                 style="max-width: 600px;" 
                 :props="defaultProps"
+                :data="cityListData"
                 ></el-tree>
             </el-card>
         </el-col>
@@ -18,12 +20,28 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue"
+import { onMounted, ref } from "vue"
+import { cityListApi } from "@/api/operations"
+
+interface CityListDataType {
+    label: string,
+    children?:CityListDataType
+}
 
 const filterText = ref<string>("")
+const cityListData = ref<CityListDataType[]>([])
 
 const defaultProps = {
-    children: "",
-    label:""
+    children: "children",
+    label:"label"
 }
+
+onMounted(async() => {
+    try { 
+        const { data } = await cityListApi()
+        cityListData.value=data
+    } catch (error) {
+        console.log(error)
+    }
+})
 </script>

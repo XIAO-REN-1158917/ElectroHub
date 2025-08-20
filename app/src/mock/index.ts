@@ -2075,3 +2075,135 @@ Mock.mock('https://www.demo.com/orders/detail', "post", (options: any) => {
     data: options.body+" Detail"
   }
 })
+
+//Mock data for tariff config
+const cityList = [
+  {
+    label: "Auckland",
+    children: [
+      {
+        label: "Central Ward",
+        children: [
+          { label: "Central Ward Station 01" },
+          { label: "Central Ward Station 02" },
+          { label: "Central Ward Station 03" },
+          { label: "Central Ward Station 04" },
+        ]
+      },
+      {
+        label: "Westside",
+        children: [
+          { label: "Westside Station 01" },
+          { label: "Westside Station 02" },
+          { label: "Westside Station 03" },
+        ]
+      },
+      {
+        label: "Sunrise Park",
+        children: [
+          { label: "Sunrise Park Station 01" },
+          { label: "Sunrise Park Station 02" },
+          { label: "Sunrise Park Station 03" },
+        ]
+      },
+      {
+        label: "Highland Bay",
+        children: [
+          { label: "Highland Bay Station 01" },
+          { label: "Highland Bay Station 02" },
+        ]
+      },
+      {
+        label: "Greenfield",
+        children: [
+          { label: "Greenfield Station 01" },
+          { label: "Greenfield Station 02" },
+        ]
+      }
+    ]
+  },
+  {
+    label: "Wellington",
+    children: [
+      {
+        label: "Harbour District",
+        children: [
+          { label: "Harbour District Station 01" }
+        ]
+      },
+      {
+        label: "Civic Quarter",
+        children: [
+          { label: "Civic Quarter Station 01" }
+        ]
+      }
+    ]
+  },
+  {
+    label: "Christchurch",
+    children: [
+      {
+        label: "Southbank",
+        children: [
+          { label: "Southbank Station 01" },
+          { label: "Southbank Station 02" }
+        ]
+      },
+      {
+        label: "Northgate",
+        children: [
+          { label: "Northgate Station 01" },
+          { label: "Northgate Station 02" }
+        ]
+      },
+      {
+        label: "Coastal Ridge",
+        children: [
+          { label: "Coastal Ridge Station 01" },
+          { label: "Coastal Ridge Station 02" }
+        ]
+      }
+    ]
+  },
+  {
+    label: "Hamilton",
+    children: [
+      { label: "Hamilton Station 01" },
+      { label: "Hamilton Station 02" },
+      { label: "Hamilton Station 03" }
+    ]
+  },
+  {
+    label: "Tauranga",
+    children: [
+      { label: "Tauranga Station 01" },
+      { label: "Tauranga Station 02" },
+      { label: "Tauranga Station 03" }
+    ]
+  },
+  {
+    label: "Dunedin",
+    children: [
+      { label: "Dunedin Station 01" },
+      { label: "Dunedin Station 02" },
+      { label: "Dunedin Station 03" }
+    ]
+  },
+  {
+    label: "Queenstown",
+    children: [
+      { label: "Queenstown Station 01" },
+      { label: "Queenstown Station 02" },
+      { label: "Queenstown Station 03" }
+    ]
+  }
+];
+
+//Operations-tariff config API
+Mock.mock('https://www.demo.com/cityList', "get", () => {
+  return {
+    code: 200,
+    message: "Successful",
+    data: cityList
+  }
+})

@@ -1,8 +1,9 @@
-import { post } from "@/utils/http";
+import { post,get } from "@/utils/http";
 
 const Api = {
     BatchDelete: "/batchDelete",
-    QueryOrderDetail:"/orders/detail"
+    QueryOrderDetail: "/orders/detail",
+    CityList:"/cityList"
 } as const;
 
 function batchDeleteApi(order: string[]) {
@@ -13,7 +14,12 @@ function queryOrderDetailApi(orderNo: string) {
     return post(Api.QueryOrderDetail,orderNo)
 }
 
+function cityListApi() {
+    return get (Api.CityList)
+}
+
 export {
     batchDeleteApi,
-    queryOrderDetailApi
+    queryOrderDetailApi,
+    cityListApi
 }
