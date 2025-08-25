@@ -2207,3 +2207,79 @@ Mock.mock('https://www.demo.com/cityList', "get", () => {
     data: cityList
   }
 })
+
+// Mock data for alarm
+const alarmList = [
+  {
+    description: "Charging plug stuck",
+    address: "Whangarei",
+    equNo: "CD1001",
+    level: 1,
+    time: "2025-12-23 19:40:15",
+    code: 10023,
+    status: 1,
+  },
+  {
+    description: "EV cannot charge",
+    address: "Auckland",
+    equNo: "CD1002",
+    level: 2,
+    time: "2025-09-25 09:28:48",
+    code: 10024,
+    status: 2,
+  },
+  {
+    description: "No notification after charging ends",
+    address: "New Plymouth",
+    equNo: "CD1003",
+    level: 3,
+    time: "2025-01-21 14:07:53",
+    code: 10025,
+    status: 1,
+  },
+  {
+    description: "Device display malfunction",
+    address: "Tauranga",
+    equNo: "CD1004",
+    level: 1,
+    time: "2025-01-03 02:30:01",
+    code: 10026,
+    status: 1,
+  },
+  {
+    description: "Unable to start charging",
+    address: "Palmerston North",
+    equNo: "CD1005",
+    level: 2,
+    time: "2025-02-23 01:07:19",
+    code: 10027,
+    status: 2,
+  },
+  {
+    description: "Charging gun poor contact",
+    address: "Christchurch",
+    equNo: "CD1006",
+    level: 3,
+    time: "2025-09-25 22:22:06",
+    code: 10028,
+    status: 3,
+  },
+  {
+    description: "Device leakage alarm",
+    address: "Nelson",
+    equNo: "CD1007",
+    level: 1,
+    time: "2025-03-31 05:30:40",
+    code: 10029,
+    status: 2,
+  },
+]
+
+//Alarm API
+Mock.mock('https://www.demo.com/alarmList', "get", () => {
+  return {
+    code: 200,
+    message: "successful",
+    data: alarmList
+  }
+})
