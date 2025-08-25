@@ -65,9 +65,9 @@ const menulist = [
         icon: "Phone"
     },
     {
-        name: "Equipment",
+        name: "Member",
         url: "/equipment",
-        icon: "Magnet"
+        icon: "Avatar"
     },
     {
         name: "Document",
@@ -149,9 +149,9 @@ const menulist2 = [
         icon: "Phone"
     },
     {
-        name: "Equipment",
+        name: "Member",
         url: "/equipment",
-        icon: "Magnet"
+        icon: "Avatar"
     },
     {
         name: "Personal",
@@ -2283,3 +2283,30 @@ Mock.mock('https://www.demo.com/alarmList', "get", () => {
     data: alarmList
   }
 })
+
+//Member API
+Mock.mock('https://www.demo.com/member', 'post', (req:any) => {
+  const { page, pageSize,no,tel,name } = JSON.parse(req.body);
+  console.log("Member API",page, pageSize,no,tel,name)
+  return {
+    "code": 200,
+    "message": "successful",
+    data: Mock.mock({
+      [`list|${pageSize}`]:[{
+        'memberCardNumber': '@id',
+        'cardType|1': ["Member", "VIP", "Premier"],
+        'issueDate': '@date("dd-mm-yyyy")',
+        'holderName': '@name', 
+        'holderPhone': /^\d{9}$/,  
+        'cardBalance': '@float(100, 10000, 2, 2)',  
+        'transactionRecords|1-5': [{
+            'transactionDate|1': ['14-06-2025', '28-05-2025', '14-10-2025', '15-02-2025'], 
+            'transactionAmount': '@float(10, 500, 2, 2)', 
+            'transactionType|1': ["charging", "service", "parking", "other"]
+        }],
+        'validUntil': '@date("dd-mm-yyyy")'
+    }],
+    total:53
+    })
+  }
+});
