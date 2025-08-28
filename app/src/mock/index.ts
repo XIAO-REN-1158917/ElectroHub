@@ -2323,3 +2323,55 @@ Mock.mock('https://www.demo.com/document',"get",()=>{
     }
   }
 })
+
+// Generate mock account
+Mock.Random.extend({
+  account: function() {
+    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const length = Mock.mock('@natural(6, 10)');
+    let result = '';
+    for (let i = 0; i < length; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
+  }
+})
+
+// System page - Permission settings API
+Mock.mock('https://www.demo.com/permissionList','post',(req:any)=>{
+  const {pageSize} = JSON.parse(req.body);
+  console.log("backend-permission setting",JSON.parse(req.body)) 
+return {
+    code:200,
+    message:"Successful",
+    data:Mock.mock({
+      [`list|${pageSize}`]:[{
+        'name': '@name', 
+        'account': '@account',
+        'phone': /^\d{9}$/,
+        'idNo': '@id',  //
+        'position|1': [
+                        "Customer Service Specialist",
+                        "Customer Service Manager",
+                        "Marketing Specialist",
+                        "Marketing Manager",
+                        "Operations Specialist",
+                        "Operations Manager",
+                        "Technical Engineer",
+                        "Technical Manager",
+                    ],
+        'department|1': [
+                        "Executive Office",
+                        "Technical",
+                        "Marketing",
+                        "Maintenance",
+                        "Operations",
+                        "Customer Service"
+                    ],
+        "pageAuthority|1":['admin','manager','user','customised'],
+        'btnAuthority|1':['add','delete','edit','all','customised'],
+    }],
+    total:41
+    })
+  }
+})
