@@ -70,7 +70,7 @@ const menulist = [
         icon: "Avatar"
     },
     {
-        name: "Document",
+        name: "Article",
         url: "/document",
         icon: "Document"
     },
@@ -2310,3 +2310,16 @@ Mock.mock('https://www.demo.com/member', 'post', (req:any) => {
     })
   }
 });
+
+//Document API
+Mock.mock('https://www.demo.com/document',"get",()=>{
+  return {
+    code:200,
+    message:"successful",
+    data:{
+      category:["Investment","Advertisement","Announcement","Reminder","General","Alert","Other"],
+      priority:["Critical","High","Medium","Low"],
+      distribution:["Internal memo","Mobile app","Email blast","Official website"]
+    }
+  }
+})
