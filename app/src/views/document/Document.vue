@@ -50,11 +50,33 @@
             >{{ item.tag }}</el-tag>
         </div>
     </el-card>
+    <el-button type="primary" class="mt mb" @click="exportToHtml">Export to HTML</el-button>
+    <Editor
+        v-model="editorContent"
+        api-key="jfd1rnfkcxg1krkdxq6aeh72f87kdkzrbi2t1v9oe3zb3n0g"
+        :init="{
+            toolbar_mode: 'sliding',
+            plugins: [
+            'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
+            'checklist', 'mediaembed', 'casechange', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'advtemplate', 'uploadcare', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown','importword', 'exportword', 'exportpdf'
+            ],
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography uploadcare | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+            tinycomments_mode: 'embedded',
+            tinycomments_author: 'Author name',
+            mergetags_list: [
+            { value: 'First.Name', title: 'First Name' },
+            { value: 'Email', title: 'Email' },
+            ],
+            uploadcare_public_key: 'b409000d8d22794a3d8a',
+        }"
+    />
+    <el-button type="primary" @click="handleSubmit" class="mt"  v-permission="'user'">Submit</el-button>
 </template>
 
 <script lang="ts" setup>
 import { articleCategoryApi } from '@/api/document';
-import { onMounted,ref } from 'vue';
+import { onMounted, ref } from 'vue';
+import Editor from '@tinymce/tinymce-vue'
 
 interface ArticleTagType{
     category: string[],
@@ -106,7 +128,19 @@ const handleClose=(group:number)=>{
     currentTagIndex.value[group]=-1
 }
 
+const editorContent = ref("")
+const exportToHtml = () => {
+    const blob = new Blob([editorContent.value], { type: "type/html" })
+    const link = document.createElement("a")
+    link.href = URL.createObjectURL(blob)
+    link.download="article.html";
+    link.click();
+    URL.revokeObjectURL(link.href)
+}
 
+const handleSubmit=()=>{
+    console.log( selectedTagArray.value.map(item=>item.tag))
+}
 
 </script>
 
