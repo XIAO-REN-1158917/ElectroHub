@@ -2351,8 +2351,8 @@ return {
         'phone': /^\d{9}$/,
         'idNo': '@id',  //
         'position|1': [
-                        "Customer Service Specialist",
-                        "Customer Service Manager",
+                        "Service Specialist",
+                        "Service Manager",
                         "Marketing Specialist",
                         "Marketing Manager",
                         "Operations Specialist",
@@ -2373,5 +2373,76 @@ return {
     }],
     total:41
     })
+  }
+})
+
+// menulist for user
+const userMenulist = [
+    {
+        name: "Dashboard",
+        url: "/dashboard",
+        icon: "DataLine"
+    },
+    {
+        name: "Charging Station",
+        url: "/chargingstation",
+        icon: "Lightning",
+        children: [
+            {
+                name: "Monitor",
+                url: "/chargingstation/monitor",
+                icon: "VideoCamera"
+            },
+            {
+                name: "Fault Report",
+                url: "/chargingstation/fault",
+                icon: "Warning"
+            }
+        ]
+    },
+    {
+        name: "Map",
+        url: "/map",
+        icon: "MapLocation"
+    },
+    {
+        name: "Alarm",
+        url: "/alarm",
+        icon: "Phone"
+    },
+    {
+        name: "Member",
+        url: "/equipment",
+        icon: "Avatar"
+    },
+    {
+        name: "Personal",
+        url: "/personal",
+        icon: "User"
+    },
+]
+
+// request user's Authority
+Mock.mock("https://www.demo.com/userAuth","post",(req:any)=>{
+ const {pageAuthority}=JSON.parse(req.body)
+  console.log("backend-user's page permission is:",pageAuthority)
+  return {
+    code:200,
+    message:"successful",
+    data:{
+      list:pageAuthority=="user"? userMenulist:(pageAuthority=="manager"?menulist2:menulist),
+      btn:pageAuthority=="user"?['add']:(pageAuthority=="manager"?['add',"edit"]:['add',"edit","all","delete"])
+    }
+  }
+})
+
+//system update user's permisson API
+Mock.mock("https://www.demo.com/setAuth","post",(req:any)=>{
+  const {btnList,pageList,account}=JSON.parse(req.body)
+  console.log("backend-received: ",account,btnList,pageList)
+  return{
+    code:200,
+    message:"successful",
+    data:null
   }
 })
