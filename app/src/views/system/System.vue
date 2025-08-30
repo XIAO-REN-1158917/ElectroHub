@@ -50,7 +50,7 @@
                     <el-button 
                     type="primary" 
                     size="small" 
-                    @click="HandlePermissionManagementModel(scope.row.pageAuthority)">
+                    @click="HandlePermissionManagementModel(scope.row.pageAuthority,scope.row.account)">
                         Manage Permissions
                     </el-button>
                     <el-button type="danger" size="small">
@@ -78,7 +78,9 @@
         :visible="visible" 
         :checked-keys="checkedKeys"
         :btn-auth="btnAuth"
+        :account="accountId"
         @close="visible=false"
+        @reload="loadData"
         />
 </template>
 
@@ -127,13 +129,15 @@ function getUrlFromMenu(menu: MenuItem[]) {
 }
 
 const checkedKeys = ref<string[]>([])
-const btnAuth=ref<string[]>([])
-const HandlePermissionManagementModel = async (pageAuthority:string) => {
+const btnAuth = ref<string[]>([])
+const accountId=ref<string>("")
+const HandlePermissionManagementModel = async (pageAuthority:string,account:string) => {
     try {
         const { data: {list, btn} } = await getUserAuthApi(pageAuthority)
         // console.log(getUrlFromMenu(list))
         checkedKeys.value = getUrlFromMenu(list)
-        btnAuth.value=btn
+        btnAuth.value = btn
+        accountId.value = account
     } catch (error) {
         console.log(error)
     }

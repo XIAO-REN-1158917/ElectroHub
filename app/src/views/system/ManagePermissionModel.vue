@@ -33,6 +33,12 @@
                 <el-checkbox label="Delete" value="delete"></el-checkbox>
             </el-checkbox-group>
         </el-card>
+        <template #footer>
+            <div class="dialog-footer">
+                <el-button @click="$emit('close')">Cancel</el-button>
+                <el-button type="primary" @click="handleSubmit">Submit</el-button>
+            </div>
+        </template>
     </el-dialog>
 </template>
 
@@ -41,11 +47,14 @@ import { useUserStore } from '@/store/auth';
 import { storeToRefs } from 'pinia';
 import { ref } from "vue"
 import { transformMenu } from '@/utils/transformMenu';
+import { editAuthApi } from '@/api/system';
+import { ElMessage } from 'element-plus';
 
 const props = defineProps<{
     visible: boolean,
     checkedKeys: string[],
-    btnAuth: string[]
+    btnAuth: string[],
+    account:string
 }>()
 
 const userStore=useUserStore()
@@ -62,11 +71,25 @@ const handleOpen = () => {
     initBtnAuth.value=props.btnAuth
 }
 
-const emit = defineEmits(["close"])
+const emit = defineEmits(["close","reload"])
 const handleClose = () => {
     emit("close")
 }
-
+const handleSubmit=async() => {
+    try {
+        const res = await editAuthApi(props.account, initBtnAuth.value, treeRef.value.getCheckedKeys(true))
+        if (res.code === 200) {
+            ElMessage({
+                message: res.message,
+                type:"success"
+            })
+            emit("close")
+            emit("reload")
+        }
+    } catch (error) {
+        console.log(error)
+    }
+ }
 
 
 </script>

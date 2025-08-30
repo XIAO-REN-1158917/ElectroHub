@@ -1,11 +1,19 @@
 import { post } from "@/utils/http";
 
 const Api = {
-    UserAuth: "/userAuth"
+    UserAuth: "/userAuth",
+    EditAuth:"/setAuth"
 } as const;
 
 function getUserAuthApi(pageAuthority: string) {
     return post(Api.UserAuth,{pageAuthority})
 }
 
-export {getUserAuthApi}
+function editAuthApi(account:string,btnList:string[],pageList:string[]) {
+    return post(Api.EditAuth,{account,btnList,pageList})
+}
+
+export {
+    getUserAuthApi,
+    editAuthApi
+}
