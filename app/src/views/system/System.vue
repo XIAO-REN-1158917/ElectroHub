@@ -74,7 +74,12 @@
                 @current-change="handleCurrentChange"
             />
         </el-card>
-        <ManagePermissionModel :visible="visible" :checked-Keys="checkedKeys"/>
+        <ManagePermissionModel 
+        :visible="visible" 
+        :checked-keys="checkedKeys"
+        :btn-auth="btnAuth"
+        @close="visible=false"
+        />
 </template>
 
 <script lang="ts" setup>
@@ -121,12 +126,14 @@ function getUrlFromMenu(menu: MenuItem[]) {
     return urls
 }
 
-const checkedKeys=ref<string[]>([])
+const checkedKeys = ref<string[]>([])
+const btnAuth=ref<string[]>([])
 const HandlePermissionManagementModel = async (pageAuthority:string) => {
     try {
         const { data: {list, btn} } = await getUserAuthApi(pageAuthority)
         // console.log(getUrlFromMenu(list))
-        checkedKeys.value=getUrlFromMenu(list)
+        checkedKeys.value = getUrlFromMenu(list)
+        btnAuth.value=btn
     } catch (error) {
         console.log(error)
     }

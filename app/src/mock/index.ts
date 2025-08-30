@@ -2340,7 +2340,7 @@ Mock.Random.extend({
 // System page - Permission settings API
 Mock.mock('https://www.demo.com/permissionList','post',(req:any)=>{
   const {pageSize} = JSON.parse(req.body);
-  console.log("backend-permission setting",JSON.parse(req.body)) 
+  console.log("backend-setting-query-table",JSON.parse(req.body)) 
 return {
     code:200,
     message:"Successful",
