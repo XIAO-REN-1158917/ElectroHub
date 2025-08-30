@@ -2323,3 +2323,126 @@ Mock.mock('https://www.demo.com/document',"get",()=>{
     }
   }
 })
+
+// Generate mock account
+Mock.Random.extend({
+  account: function() {
+    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const length = Mock.mock('@natural(6, 10)');
+    let result = '';
+    for (let i = 0; i < length; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
+  }
+})
+
+// System page - Permission settings API
+Mock.mock('https://www.demo.com/permissionList','post',(req:any)=>{
+  const {pageSize} = JSON.parse(req.body);
+  console.log("backend-setting-query-table",JSON.parse(req.body)) 
+return {
+    code:200,
+    message:"Successful",
+    data:Mock.mock({
+      [`list|${pageSize}`]:[{
+        'name': '@name', 
+        'account': '@account',
+        'phone': /^\d{9}$/,
+        'idNo': '@id',  //
+        'position|1': [
+                        "Service Specialist",
+                        "Service Manager",
+                        "Marketing Specialist",
+                        "Marketing Manager",
+                        "Operations Specialist",
+                        "Operations Manager",
+                        "Technical Engineer",
+                        "Technical Manager",
+                    ],
+        'department|1': [
+                        "Executive Office",
+                        "Technical",
+                        "Marketing",
+                        "Maintenance",
+                        "Operations",
+                        "Customer Service"
+                    ],
+        "pageAuthority|1":['admin','manager','user','customised'],
+        'btnAuthority|1':['add','delete','edit','all','customised'],
+    }],
+    total:41
+    })
+  }
+})
+
+// menulist for user
+const userMenulist = [
+    {
+        name: "Dashboard",
+        url: "/dashboard",
+        icon: "DataLine"
+    },
+    {
+        name: "Charging Station",
+        url: "/chargingstation",
+        icon: "Lightning",
+        children: [
+            {
+                name: "Monitor",
+                url: "/chargingstation/monitor",
+                icon: "VideoCamera"
+            },
+            {
+                name: "Fault Report",
+                url: "/chargingstation/fault",
+                icon: "Warning"
+            }
+        ]
+    },
+    {
+        name: "Map",
+        url: "/map",
+        icon: "MapLocation"
+    },
+    {
+        name: "Alarm",
+        url: "/alarm",
+        icon: "Phone"
+    },
+    {
+        name: "Member",
+        url: "/equipment",
+        icon: "Avatar"
+    },
+    {
+        name: "Personal",
+        url: "/personal",
+        icon: "User"
+    },
+]
+
+// request user's Authority
+Mock.mock("https://www.demo.com/userAuth","post",(req:any)=>{
+ const {pageAuthority}=JSON.parse(req.body)
+  console.log("backend-user's page permission is:",pageAuthority)
+  return {
+    code:200,
+    message:"successful",
+    data:{
+      list:pageAuthority=="user"? userMenulist:(pageAuthority=="manager"?menulist2:menulist),
+      btn:pageAuthority=="user"?['add']:(pageAuthority=="manager"?['add',"edit"]:['add',"edit","all","delete"])
+    }
+  }
+})
+
+//system update user's permisson API
+Mock.mock("https://www.demo.com/setAuth","post",(req:any)=>{
+  const {btnList,pageList,account}=JSON.parse(req.body)
+  console.log("backend-received: ",account,btnList,pageList)
+  return{
+    code:200,
+    message:"successful",
+    data:null
+  }
+})
