@@ -26,7 +26,7 @@
 import { ref } from "vue"
 
 const currentStep = ref<number>(0)
-const props=defineProps(["steps","basicInfoFormRef","approvalInfoFormRef","supervisorInfoFormRef"])
+const props=defineProps(["steps","form1","form2","form3"])
 const emit=defineEmits(["handleSubmit"])
 
 const handleBack = () => {
@@ -37,7 +37,7 @@ const handleBack = () => {
 
 
 const handleNextStep = () => {
-    const forms=[props.basicInfoFormRef,props.approvalInfoFormRef,props.supervisorInfoFormRef]
+    const forms=[props.form1,props.form2,props.form3]
     const currentForm = forms[currentStep.value]
 
     currentForm.validate((valid:boolean) => {

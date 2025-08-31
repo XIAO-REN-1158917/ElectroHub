@@ -34,9 +34,9 @@
     >
         <StepForm 
         :steps="steps" 
-        :basicInfoFormRef="basicInfoFormRef"
-        :approvalInfoFormRef="approvalInfoFormRef"
-        :supervisorInfoFormRef="supervisorInfoFormRef"
+        :form1="basicInfoFormRef"
+        :form2="approvalInfoFormRef"
+        :form3="supervisorInfoFormRef"
         @handle-submit="handleSubmit"
         >
             <template #step-1>
@@ -137,7 +137,6 @@ interface AlarmListType{
     status: number,
 }
 
-const alarmRadio = ref < number > (1)
 const alarmList = ref<AlarmListType[]>([])
 
 onMounted(async () => {
