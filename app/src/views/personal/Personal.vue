@@ -129,7 +129,7 @@
 
                     <el-collapse-item title="Business Trip Reimbursement Approval" name="5">
                         <div style="display: flex;justify-content: space-between;">
-                            <h3>Operations Department: 7 staff business trip, reimbursement of 8700 yuan requires approval</h3>
+                            <h3>Operations Department: 7 staff business trip, reimbursement of $8700 requires approval</h3>
                             <el-button type="primary" size="small" class="mr">Handle</el-button>
                         </div>
                     </el-collapse-item>
