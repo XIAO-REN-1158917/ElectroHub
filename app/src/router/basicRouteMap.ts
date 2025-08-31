@@ -1,4 +1,3 @@
-import { KeepAlive } from "vue";
 import type { RouteRecordRaw } from "vue-router";
 
 const routes: RouteRecordRaw[] = [
