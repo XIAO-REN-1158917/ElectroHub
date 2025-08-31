@@ -53,7 +53,7 @@
     <el-button type="primary" class="mt mb" @click="exportToHtml">Export to HTML</el-button>
     <Editor
         v-model="editorContent"
-        api-key="jfd1rnfkcxg1krkdxq6aeh72f87kdkzrbi2t1v9oe3zb3n0g"
+        :api-key=tinyMceApiKey
         :init="{
             toolbar_mode: 'sliding',
             plugins: [
@@ -77,6 +77,8 @@
 import { articleCategoryApi } from '@/api/document';
 import { onMounted, ref } from 'vue';
 import Editor from '@tinymce/tinymce-vue'
+
+const tinyMceApiKey = import.meta.env.VITE_TINYMCE_API_KEY
 
 interface ArticleTagType{
     category: string[],

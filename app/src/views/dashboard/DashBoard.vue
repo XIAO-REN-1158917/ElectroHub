@@ -314,7 +314,10 @@ import money from "@/assets/money.png"
 import daily from "@/assets/daily.png"
 import { useChart } from "@/hooks/useChart"
 import { ref,reactive } from "vue"
-import { lineChartDataApi,pieChartDataApi,radarChartDataApi } from "@/api/dashboard"
+import { lineChartDataApi, pieChartDataApi, radarChartDataApi } from "@/api/dashboard"
+import.meta.env.VITE_API_URL
+
+
 
 const lineChartRef = ref(null)
 const pieChartRef = ref(null)
@@ -474,7 +477,9 @@ const setRadarChartData = async () => {
 
 useChart(lineChartRef, setLineChartData)
 useChart(pieChartRef, setPieChartData)
-useChart(radarChartRef,setRadarChartData)
+useChart(radarChartRef, setRadarChartData)
+
+console.log("env parameter",import.meta.env.VITE_API_URL)
 
 
 </script>
